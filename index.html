@@ -480,11 +480,7 @@ footer { text-align: center; padding: 32px 24px 24px; position: relative; z-inde
   <p class="bottom-sub">Start your journey to $10K/month</p>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <p class="foot-copy">© 2026 OGs Inner Circle. All Rights Reserved.</p>
-  <span class="built-badge">⚡ Built for OGs Inner Circle</span>
-</footer>
+
 
 <script>
 const TOTAL = 5;
@@ -497,6 +493,7 @@ if (window.innerWidth > 768) {
   document.body.appendChild(glow);
   document.addEventListener('mousemove', e => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
 }
+
 
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
