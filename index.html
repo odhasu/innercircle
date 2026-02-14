@@ -1,168 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OGs Inner Circle – Apply Now</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg: #0a0a0a; --card: #111; --border: rgba(255,255,255,0.07);
-  --green: #39ff00; --green-glow: rgba(57,255,0,0.2); --green-dim: rgba(57,255,0,0.08);
-  --text: #fff; --muted: rgba(255,255,255,0.45); --tag-bg: #f0ece4;
-}
-html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
-body::before {
-  content: ''; position: fixed; inset: 0;
-  background-image: linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
-  background-size: 80px 80px; pointer-events: none; z-index: 0;
-}
-nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px; position: relative; z-index: 10; opacity: 0; animation: navSlide 0.5s ease both; }
-.logo { font-size: 15px; font-weight: 800; letter-spacing: -0.3px; }
-.nav-cta { background: var(--green); color: #000; font-weight: 800; font-size: 13px; padding: 9px 18px; border-radius: 8px; text-decoration: none; letter-spacing: -0.2px; position: relative; overflow: hidden; transition: box-shadow 0.2s; }
-.nav-cta:hover { box-shadow: 0 0 20px var(--green-glow); }
-.nav-cta::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%); transform: translateX(-100%); transition: transform 0.5s; }
-.nav-cta:hover::after { transform: translateX(100%); }
-.hero { text-align: center; padding: 44px 22px 0; position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
-.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 7px 16px; border-radius: 100px; margin-bottom: 26px; opacity: 0; animation: heroReveal 0.6s 0s ease both; }
-.hero-badge .year { color: var(--green); }
-.hero h1 { font-size: clamp(30px, 7vw, 56px); font-weight: 900; line-height: 1.08; letter-spacing: -1.8px; margin-bottom: 16px; opacity: 0; animation: heroReveal 0.8s 0.2s ease both; }
-.hero h1 .green { color: var(--green); }
-.hero-sub { font-size: 15px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; opacity: 0; animation: heroReveal 0.6s 0.35s ease both; }
-.hero-video { width: 100%; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); aspect-ratio: 16/9; margin-bottom: 28px; opacity: 0; animation: heroReveal 0.7s 0.5s ease both; }
-.hero-video iframe { width: 100%; height: 100%; border: none; display: block; }
-.hero-cta { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--green); color: #000; font-weight: 800; font-size: 17px; padding: 18px 28px; border-radius: 12px; text-decoration: none; width: 100%; box-shadow: 0 0 30px var(--green-glow); letter-spacing: -0.2px; margin-bottom: 52px; opacity: 0; animation: heroReveal 0.6s 0.65s ease both; }
-.ticker-wrap { overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: #0f0f0f; padding: 12px 0; margin-bottom: 64px; position: relative; z-index: 1; }
-.ticker-track { display: flex; white-space: nowrap; animation: ticker 32s linear infinite; }
-.ticker-item { display: inline-flex; align-items: center; gap: 8px; padding: 0 22px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5); }
-.ticker-item .ck { color: var(--green); font-size: 12px; }
-.apply-section { max-width: 720px; margin: 0 auto; padding: 0 20px 80px; position: relative; z-index: 1; }
-.apply-title { font-size: clamp(36px, 8vw, 60px); font-weight: 900; text-align: center; letter-spacing: -2px; margin-bottom: 8px; }
-.apply-underline { width: 60px; height: 3px; background: var(--green); margin: 0 auto 14px; border-radius: 2px; }
-.apply-sub { text-align: center; color: var(--muted); font-size: 15px; margin-bottom: 32px; }
-.clyro-form { background: var(--card); border: 1.5px solid var(--green); border-radius: 18px; overflow: hidden; animation: borderPulse 4s ease-in-out infinite; }
-.question { display: none; }
-.question.active { display: flex; flex-direction: column; animation: qIn 0.28s ease both; }
-.q-inner { padding: 32px 28px 20px; flex: 1; }
-@media(max-width:500px){ .q-inner { padding: 26px 20px 16px; } }
-.q-badge { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: #1a3d1a; color: var(--green); font-size: 15px; font-weight: 800; border-radius: 8px; margin-bottom: 20px; }
-.q-arrow { color: var(--green); margin-right: 8px; font-size: 15px; }
-.q-title { font-size: clamp(18px, 4vw, 26px); font-weight: 800; letter-spacing: -0.5px; line-height: 1.25; margin-bottom: 26px; }
-.choices { display: flex; flex-direction: column; gap: 9px; }
-.choice { display: flex; align-items: center; gap: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px 18px; cursor: pointer; font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.7); transition: all 0.14s; user-select: none; }
-.choice:hover { border-color: rgba(57,255,0,0.35); color: #fff; background: var(--green-dim); }
-.choice.selected { border-color: var(--green); background: var(--green-dim); color: #fff; animation: selectBounce 0.25s cubic-bezier(0.175,0.885,0.32,1.275); }
-.ck-key { width: 28px; height: 28px; flex-shrink: 0; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--muted); transition: all 0.14s; }
-.choice.selected .ck-key { background: var(--green); border-color: var(--green); color: #000; }
-.input-label { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; display: block; }
-.q-input { width: 100%; background: transparent; border: none; border-bottom: 2px solid rgba(255,255,255,0.15); outline: none; font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 600; color: var(--text); padding: 6px 0 12px; transition: border-color 0.2s; letter-spacing: -0.3px; }
-.q-input:focus { border-bottom-color: var(--green); }
-.q-input::placeholder { color: rgba(255,255,255,0.18); font-weight: 400; }
-.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-@media(max-width:500px){ .input-row { grid-template-columns: 1fr; gap: 16px; } }
-.phone-wrap { display: flex; align-items: flex-end; gap: 10px; margin-top: 24px; }
-.phone-flag { display: flex; align-items: center; gap: 5px; padding-bottom: 12px; border-bottom: 2px solid rgba(255,255,255,0.15); color: var(--muted); font-size: 15px; font-weight: 600; white-space: nowrap; }
-.flag-emoji { font-size: 20px; }
-.phone-wrap .q-input { flex: 1; }
-.q-footer { display: flex; align-items: center; justify-content: space-between; padding: 14px 28px 16px; gap: 10px; }
-@media(max-width:500px){ .q-footer { padding: 12px 20px 14px; } }
-.btn-back { display: flex; align-items: center; gap: 6px; background: transparent; border: none; color: rgba(255,255,255,0.55); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; padding: 0; transition: color 0.15s; }
-.btn-back:hover { color: #fff; }
-.btn-back svg { width: 14px; height: 14px; }
-.btn-back:disabled { opacity: 0; pointer-events: none; }
-.enter-ok { display: flex; align-items: center; gap: 10px; }
-.enter-hint { font-size: 13px; color: var(--muted); }
-.enter-hint kbd { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 5px; padding: 3px 7px; font-family: 'Inter', sans-serif; font-size: 12px; color: rgba(255,255,255,0.6); }
-.btn-ok { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 12px 22px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: #fff; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
-.btn-ok:hover { background: rgba(255,255,255,0.16); }
-.btn-ok.ready { background: var(--green); color: #000; border-color: var(--green); box-shadow: 0 0 20px var(--green-glow); }
-.q-error { font-size: 12px; color: #f87171; padding: 0 28px 8px; min-height: 20px; }
-.dot-row { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 10px 28px 6px; }
-.dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.15); transition: width 0.35s cubic-bezier(0.4,0,0.2,1), background 0.35s ease; }
-.dot.active { background: var(--green); width: 26px; border-radius: 5px; }
-.dot.done { background: rgba(57,255,0,0.45); }
-.form-brand { text-align: center; font-size: 12px; color: rgba(255,255,255,0.2); padding-bottom: 16px; }
-.success-wrap { text-align: center; padding: 36px 28px 24px; }
-.success-ico { width: 72px; height: 72px; background: var(--green-dim); border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 30px; color: var(--green); animation: popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both; box-shadow: 0 0 30px var(--green-glow); }
-.success-wrap h3 { font-size: 28px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 10px; animation: fadeUp 0.5s 0.15s ease both; }
-.success-wrap p { font-size: 15px; color: var(--muted); line-height: 1.7; animation: fadeUp 0.5s 0.25s ease both; }
-.success-wrap p strong { color: var(--green); }
-.guide-card { animation: fadeUp 0.5s 0.35s ease both; }
-.btn-guide { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--green); color: #000; font-weight: 800; font-size: 16px; padding: 16px 24px; border-radius: 12px; text-decoration: none; width: 100%; margin-top: 20px; box-shadow: 0 0 28px var(--green-glow); letter-spacing: -0.2px; transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; animation: fadeUp 0.5s 0.45s ease both; }
-.btn-guide:hover { transform: translateY(-2px); box-shadow: 0 0 44px rgba(57,255,0,0.4); }
-.btn-guide:active { transform: scale(0.98); }
-.btn-guide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%); transform: translateX(-100%); transition: transform 0.6s; }
-.btn-guide:hover::after { transform: translateX(100%); }
-.ripple-btn { position: relative; overflow: hidden; }
-.ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.3); transform: scale(0); animation: ripple-anim 0.6s linear; pointer-events: none; }
-.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.cursor-glow { width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(57,255,0,0.06) 0%, transparent 70%); position: fixed; pointer-events: none; z-index: 0; transform: translate(-50%, -50%); transition: left 0.15s ease, top 0.15s ease; }
-.tag-outer { transition: transform 0.25s ease; }
-.tag-outer:hover { transform: translateY(-4px); }
-.faq-item { transition: border-color 0.2s; }
-.faq-item:hover { border-color: rgba(57,255,0,0.25); }
-.resources-section, .system-section, .results-section, .faq-section { max-width: 720px; margin: 0 auto; padding: 60px 20px; position: relative; z-index: 1; border-top: 1px solid var(--border); }
-.res-label { text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--green); margin-bottom: 14px; }
-.res-title { font-size: clamp(28px, 6vw, 46px); font-weight: 900; text-align: center; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 14px; }
-.res-title .green { color: var(--green); }
-.res-sub { text-align: center; color: var(--muted); font-size: 15px; margin-bottom: 36px; line-height: 1.5; max-width: 480px; margin-left: auto; margin-right: auto; }
-.res-video { width: 100%; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); aspect-ratio: 16/9; }
-.res-video iframe { width: 100%; height: 100%; border: none; display: block; }
-.sys-title { font-size: clamp(26px, 6vw, 44px); font-weight: 900; text-align: center; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 36px; }
-.sys-title .green { color: var(--green); }
-.tag-outer { margin-bottom: 32px; padding-top: 24px; position: relative; }
-.tag-pin { width: 16px; height: 16px; background: #c8a96e; border-radius: 50%; border: 3px solid #8a6a30; margin: 0 auto; display: block; box-shadow: 0 2px 8px rgba(0,0,0,0.5); position: relative; z-index: 2; }
-.tag-card { background: #f0ece4; color: #111; border-radius: 12px; padding: 28px 28px 32px; clip-path: polygon(0 0,100% 0,100% calc(100% - 14px),calc(50% + 14px) 100%,50% calc(100% - 9px),calc(50% - 14px) 100%,0 calc(100% - 14px)); }
-.tag-card h3 { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 8px; }
-.tag-card .tdesc { font-size: 15px; color: #444; margin-bottom: 14px; line-height: 1.5; }
-.tag-card .tdesc strong { color: #111; font-weight: 700; }
-.tag-divider { height: 1px; background: rgba(0,0,0,0.1); margin-bottom: 14px; }
-.tag-card ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-.tag-card ul li { font-size: 14px; color: #444; display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; }
-.tag-card ul li::before { content: '✓'; color: #111; font-weight: 800; flex-shrink: 0; }
-.tag-card ul li strong { color: #111; font-weight: 700; }
-.results-section { padding: 60px 20px 40px; }
-.res-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(57,255,0,0.08); border: 1px solid rgba(57,255,0,0.22); color: var(--green); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 14px; }
-.res-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
-.results-section h2 { font-size: clamp(26px, 7vw, 44px); font-weight: 900; letter-spacing: -1.2px; line-height: 1.1; margin-bottom: 6px; }
-.results-section h2 .green { color: var(--green); }
-.rsub { color: var(--muted); font-size: 14px; margin-bottom: 28px; line-height: 1.5; }
-.yt-card { background: #111; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 16px; }
-.yt-card iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
-.yt-info { padding: 14px 16px; }
-.yt-t { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
-.yt-s { font-size: 12px; color: var(--muted); }
-.faq-section h2 { font-size: clamp(26px, 6vw, 44px); font-weight: 900; letter-spacing: -1.2px; text-align: center; margin-bottom: 36px; }
-.faq-item { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
-.faq-q { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; cursor: pointer; font-size: 16px; font-weight: 700; transition: background 0.15s; user-select: none; }
-.faq-q:hover { background: rgba(255,255,255,0.03); }
-.faq-icon { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; transition: transform 0.25s, background 0.15s; color: var(--muted); }
-.faq-item.open .faq-icon { transform: rotate(45deg); background: rgba(57,255,0,0.12); color: var(--green); }
-.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.2s; font-size: 15px; color: var(--muted); line-height: 1.7; padding: 0 22px; }
-.faq-item.open .faq-a { max-height: 300px; padding: 0 22px 20px; }
-.bottom-cta { max-width: 720px; margin: 0 auto; padding: 20px 20px 16px; position: relative; z-index: 1; }
-.bottom-cta-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--green); color: #000; font-weight: 800; font-size: 17px; padding: 18px 28px; border-radius: 12px; text-decoration: none; width: 100%; box-shadow: 0 0 30px var(--green-glow); letter-spacing: -0.2px; margin-bottom: 8px; }
-.bottom-sub { text-align: center; font-size: 13px; color: var(--muted); }
-footer { text-align: center; padding: 32px 24px 24px; position: relative; z-index: 1; border-top: 1px solid var(--border); }
-.foot-copy { font-size: 13px; color: rgba(255,255,255,0.2); margin-bottom: 14px; }
-.built-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.35); font-size: 12px; font-weight: 600; padding: 8px 18px; border-radius: 100px; }
-@keyframes navSlide    { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
-@keyframes heroReveal  { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
-@keyframes qIn         { from{opacity:0;transform:translateY(10px)}  to{opacity:1;transform:translateY(0)} }
-@keyframes fadeUp      { from{opacity:0;transform:translateY(12px)}  to{opacity:1;transform:translateY(0)} }
-@keyframes popIn       { from{transform:scale(0);opacity:0}          to{transform:scale(1);opacity:1} }
-@keyframes ticker      { from{transform:translateX(0)}               to{transform:translateX(-50%)} }
-@keyframes selectBounce{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.02)} }
-@keyframes borderPulse { 0%,100%{box-shadow:0 0 20px rgba(57,255,0,0.08)} 50%{box-shadow:0 0 50px rgba(57,255,0,0.18)} }
-@keyframes ripple-anim { to{transform:scale(4);opacity:0} }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OGs Inner Circle – Build a $5K-$30K/Month Reselling Business</title>
+  <meta name="description" content="Join 200+ members building $5K–$30K/month high-ticket reselling businesses. Access private OEM vendors, 1-on-1 coaching, and the exact system that works.">
+  <meta name="theme-color" content="#050505">
+  <meta property="og:title" content="OGs Inner Circle – $5K-$30K/Month Reselling System">
+  <meta property="og:description" content="Join 200+ members building high-ticket reselling businesses with verified OEM vendors that pass StockX authentication every time.">
+  <meta property="og:type" content="website">
+  <meta name="robots" content="index, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- JSON-LD: Course / Program structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "OGs Inner Circle – High-Ticket Reselling Mentorship",
+    "description": "Learn how to build a $5K–$30K/month reselling business using verified OEM vendors, 1-on-1 coaching, and a proven system used by 200+ active members.",
+    "provider": {
+      "@type": "Organization",
+      "name": "OGs Inner Circle",
+      "url": "https://ogresell.shop"
+    },
+    "offers": {
+      "@type": "Offer",
+      "category": "Mentorship Program",
+      "availability": "https://schema.org/LimitedAvailability"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage structured data (helps Google show FAQ rich results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Are these vendors legit?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. These are the same OEM vendors our Inner Circle members use to pass StockX and GOAT authentication every single time. 100% authentic products."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How fast can I start making money?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can place your first order and list products the same day you get access. Many members make their first sale within the first week."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is included in the Inner Circle?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Inner Circle includes 50+ private vendor contacts, weekly coaching calls, view bots, reselling methods, 10+ hours of training, and a private Skool & Discord community with 200+ active members."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need experience to start?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No experience needed. Our vendors and resources are beginner-friendly and everything is explained step-by-step inside the community."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
-<!-- ── HIDDEN FORMSPREE FORM (invisible, used for submission) ── -->
+<!-- Hidden Formspree form -->
 <form id="fs-form" action="https://formspree.io/f/mdalegvn" method="POST" style="display:none;">
   <input type="hidden" name="experience" id="f-experience">
   <input type="hidden" name="goal"       id="f-goal">
@@ -172,25 +89,30 @@ footer { text-align: center; padding: 32px 24px 24px; position: relative; z-inde
   <input type="hidden" name="phone"      id="f-phone">
 </form>
 
-<!-- NAV -->
-<nav>
-  <div class="logo">OGs Inner Circle</div>
-  <a href="#apply" class="nav-cta">Apply For The Inner Circle</a>
-</nav>
-
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">🔒 MAKE <span class="year">2026</span> YOUR BIGGEST YEAR YET</div>
-  <h1>See How Regular People Are Building <span class="green">$5K–$30K/Month</span> High-Ticket Reselling Businesses</h1>
-  <p class="hero-sub">The Exact System 200+ Members Use to Flip Authentic Products for Profit</p>
-  <div class="hero-video">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="OGs Inner Circle" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <div class="hero-badge">
+    <span class="lock">🔒</span>
+    MAKE <span class="year">2026</span> YOUR BIGGEST YEAR YET
   </div>
-  <a href="#apply" class="hero-cta">Apply For The Inner Circle ↗</a>
+
+  <h1>
+    See How Regular People Are Building
+    <span class="green-patch">$5K-$30K/Month</span>
+    High-Ticket Reselling Businesses
+  </h1>
+
+  <p class="hero-sub">The Exact System 200+ Members Use to Flip Authentic Products for Profit</p>
+
+  <div class="hero-video">
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="OGs Inner Circle – How It Works" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+  </div>
+
+  <a href="#apply" class="hero-cta ripple-btn">Apply For The Inner Circle ↗</a>
 </section>
 
 <!-- TICKER -->
-<div class="ticker-wrap">
+<div class="ticker-wrap" aria-hidden="true">
   <div class="ticker-track">
     <span class="ticker-item"><span class="ck">✓</span>10+ Hours of Reselling Training</span>
     <span class="ticker-item"><span class="ck">✓</span>200+ Inner Circle Members</span>
@@ -200,6 +122,7 @@ footer { text-align: center; padding: 32px 24px 24px; position: relative; z-inde
     <span class="ticker-item"><span class="ck">✓</span>Weekly Group Meetings</span>
     <span class="ticker-item"><span class="ck">✓</span>Custom $10K/Month Action Plan</span>
     <span class="ticker-item"><span class="ck">✓</span>View Bots for Enhanced Sales</span>
+    <span class="ticker-item"><span class="ck">✓</span>And Much More</span>
     <span class="ticker-item"><span class="ck">✓</span>10+ Hours of Reselling Training</span>
     <span class="ticker-item"><span class="ck">✓</span>200+ Inner Circle Members</span>
     <span class="ticker-item"><span class="ck">✓</span>High Ticket Vendor Access</span>
@@ -208,12 +131,13 @@ footer { text-align: center; padding: 32px 24px 24px; position: relative; z-inde
     <span class="ticker-item"><span class="ck">✓</span>Weekly Group Meetings</span>
     <span class="ticker-item"><span class="ck">✓</span>Custom $10K/Month Action Plan</span>
     <span class="ticker-item"><span class="ck">✓</span>View Bots for Enhanced Sales</span>
+    <span class="ticker-item"><span class="ck">✓</span>And Much More</span>
   </div>
 </div>
 
 <!-- APPLY FORM -->
 <section class="apply-section" id="apply">
-  <div class="apply-title">Apply Now</div>
+  <h2 class="apply-title section-h">Apply Now</h2>
   <div class="apply-underline"></div>
   <p class="apply-sub">Complete the application below to see if you qualify.</p>
 
@@ -234,14 +158,15 @@ footer { text-align: center; padding: 32px 24px 24px; position: relative; z-inde
       </div>
       <div class="q-error" id="e1"></div>
       <div class="q-footer">
-        <button class="btn-back" disabled><svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Back</button>
+        <button class="btn-back" disabled aria-label="Go back">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Back
+        </button>
         <div class="enter-ok">
           <span class="enter-hint">Press <kbd>Enter</kbd> to continue</span>
-          <button class="btn-ok" onclick="next(1)">OK →</button>
+          <button class="btn-ok ripple-btn" onclick="next(1)">OK →</button>
         </div>
       </div>
       <div class="dot-row" id="d1"></div>
-      <div class="form-brand">Form built with ❤️</div>
     </div>
 
     <!-- Q2 -->
@@ -258,14 +183,15 @@ footer { text-align: center; padding: 32px 24px 24px; position: relative; z-inde
       </div>
       <div class="q-error" id="e2"></div>
       <div class="q-footer">
-        <button class="btn-back" onclick="back(2)"><svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Back</button>
+        <button class="btn-back" onclick="back(2)" aria-label="Go back">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Back
+        </button>
         <div class="enter-ok">
           <span class="enter-hint">Press <kbd>Enter</kbd> to continue</span>
-          <button class="btn-ok" onclick="next(2)">OK →</button>
+          <button class="btn-ok ripple-btn" onclick="next(2)">OK →</button>
         </div>
       </div>
       <div class="dot-row" id="d2"></div>
-      <div class="form-brand">Form built with ❤️</div>
     </div>
 
     <!-- Q3 -->
@@ -282,33 +208,35 @@ footer { text-align: center; padding: 32px 24px 24px; position: relative; z-inde
       </div>
       <div class="q-error" id="e3"></div>
       <div class="q-footer">
-        <button class="btn-back" onclick="back(3)"><svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Back</button>
+        <button class="btn-back" onclick="back(3)" aria-label="Go back">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Back
+        </button>
         <div class="enter-ok">
           <span class="enter-hint">Press <kbd>Enter</kbd> to continue</span>
-          <button class="btn-ok" onclick="next(3)">OK →</button>
+          <button class="btn-ok ripple-btn" onclick="next(3)">OK →</button>
         </div>
       </div>
       <div class="dot-row" id="d3"></div>
-      <div class="form-brand">Form built with ❤️</div>
     </div>
 
     <!-- Q4: Email -->
     <div class="question" id="q4">
       <div class="q-inner">
         <div class="q-badge">4</div>
-        <div class="q-title"><span class="q-arrow">→</span>Got it, and what's the best email to reach you at?</div>
-        <input class="q-input" type="email" id="emailVal" placeholder="name@example.com" />
+        <div class="q-title"><span class="q-arrow">→</span>Got it — what's the best email to reach you at?</div>
+        <input class="q-input" type="email" id="emailVal" placeholder="name@example.com" autocomplete="email" />
       </div>
       <div class="q-error" id="e4"></div>
       <div class="q-footer">
-        <button class="btn-back" onclick="back(4)"><svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Back</button>
+        <button class="btn-back" onclick="back(4)" aria-label="Go back">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Back
+        </button>
         <div class="enter-ok">
           <span class="enter-hint">Press <kbd>Enter</kbd> to continue</span>
-          <button class="btn-ok" onclick="next(4)">OK →</button>
+          <button class="btn-ok ripple-btn" onclick="next(4)">OK →</button>
         </div>
       </div>
       <div class="dot-row" id="d4"></div>
-      <div class="form-brand">Form built with ❤️</div>
     </div>
 
     <!-- Q5: Name + Phone -->
@@ -319,28 +247,33 @@ footer { text-align: center; padding: 32px 24px 24px; position: relative; z-inde
         <div class="input-row">
           <div>
             <span class="input-label">First name</span>
-            <input class="q-input" type="text" id="firstName" placeholder="Jane" />
+            <input class="q-input" type="text" id="firstName" placeholder="Jane" autocomplete="given-name" />
           </div>
           <div>
             <span class="input-label">Last name</span>
-            <input class="q-input" type="text" id="lastName" placeholder="Smith" />
+            <input class="q-input" type="text" id="lastName" placeholder="Smith" autocomplete="family-name" />
           </div>
         </div>
         <div class="phone-wrap">
-          <div class="phone-flag"><span class="flag-emoji">🇳🇱</span><span>+31</span></div>
-          <input class="q-input" type="tel" id="phoneVal" placeholder="6 12345678" />
+          <div class="country-select-inner">
+            <span class="country-flag" id="flagDisplay">🇺🇸</span>
+            <span class="country-code" id="codeDisplay">+1</span>
+            <select id="countrySelect" class="country-select" title="Select country code"></select>
+          </div>
+          <input class="q-input" type="tel" id="phoneVal" placeholder="555 123 4567" autocomplete="tel-national" />
         </div>
       </div>
       <div class="q-error" id="e5"></div>
       <div class="q-footer">
-        <button class="btn-back" onclick="back(5)"><svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Back</button>
+        <button class="btn-back" onclick="back(5)" aria-label="Go back">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Back
+        </button>
         <div class="enter-ok">
           <span class="enter-hint">Press <kbd>Enter</kbd> to continue</span>
-          <button class="btn-ok" onclick="next(5)">OK →</button>
+          <button class="btn-ok ripple-btn" onclick="next(5)">OK →</button>
         </div>
       </div>
       <div class="dot-row" id="d5"></div>
-      <div class="form-brand">Form built with ❤️</div>
     </div>
 
     <!-- SUCCESS -->
@@ -348,8 +281,8 @@ footer { text-align: center; padding: 32px 24px 24px; position: relative; z-inde
       <div class="success-wrap">
         <div class="success-ico">✓</div>
         <h3>Application Received!</h3>
-        <p>We've reviewed your answers and sent your <strong>free reselling guide</strong> to your inbox. We'll also reach out personally within <strong>24 hours</strong> — keep an eye on your email.</p>
-        <div class="guide-card" style="margin-top:28px;background:#0a0a0a;border:1.5px solid rgba(57,255,0,0.25);border-radius:12px;padding:20px;">
+        <p>We've reviewed your answers and sent your <strong>free reselling guide</strong> to your inbox. We'll reach out personally within <strong>24 hours</strong> — keep an eye on your email.</p>
+        <div class="guide-card" style="margin-top:28px;background:rgba(0,0,0,0.6);border:1px solid rgba(57,255,20,0.22);border-radius:12px;padding:20px;">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
             <span style="font-size:24px;">📩</span>
             <div>
@@ -358,288 +291,157 @@ footer { text-align: center; padding: 32px 24px 24px; position: relative; z-inde
             </div>
           </div>
           <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;">
-            <li style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><span style="color:var(--green);font-weight:800;font-size:12px;">✓</span> How to find your first high-ticket product</li>
-            <li style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><span style="color:var(--green);font-weight:800;font-size:12px;">✓</span> The platforms that pay the most</li>
-            <li style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><span style="color:var(--green);font-weight:800;font-size:12px;">✓</span> How to pass StockX & GOAT authentication</li>
-            <li style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><span style="color:var(--green);font-weight:800;font-size:12px;">✓</span> The exact steps our members use to hit $10K/month</li>
+            <li style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><span style="color:var(--green);font-weight:800;">✓</span>How to find your first high-ticket product</li>
+            <li style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><span style="color:var(--green);font-weight:800;">✓</span>The platforms that pay the most</li>
+            <li style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><span style="color:var(--green);font-weight:800;">✓</span>How to pass StockX & GOAT authentication</li>
+            <li style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.7);"><span style="color:var(--green);font-weight:800;">✓</span>The exact steps our members use to hit $10K/month</li>
           </ul>
         </div>
-        <a href="https://ogresell.shop/b/guide" target="_blank" class="btn-guide ripple-btn">📖 Get Your Free Reselling Guide ↗</a>
+        <a href="https://ogresell.shop/b/guide" target="_blank" rel="noopener" class="btn-guide ripple-btn">📖 Get Your Free Reselling Guide ↗</a>
         <p style="font-size:12px;color:var(--muted);margin-top:10px;">We'll also reach out personally within <strong style="color:var(--green);">24 hours</strong></p>
       </div>
       <div class="dot-row" id="d-ok"></div>
-      <div class="form-brand">Form built with ❤️</div>
     </div>
 
-  </div><!-- /form -->
+  </div><!-- /clyro-form -->
 </section>
 
 <!-- EXCLUSIVE RESOURCES -->
-<section class="resources-section reveal">
+<section class="section-wrap narrow reveal">
   <div class="res-label">Exclusive Resources</div>
-  <h2 class="res-title">Everything You Need to <span class="green">Start Reselling</span></h2>
+  <h2 class="section-h" style="text-align:center;margin-bottom:14px;">
+    Everything You Need to <span class="green">Start Reselling</span>
+  </h2>
   <p class="res-sub">Get instant access to my verified vendors, free products, and private community.</p>
   <div class="res-video">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Resources" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="OGs Inner Circle Resources Overview" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
   </div>
 </section>
 
 <!-- 3-STEP SYSTEM -->
-<section class="system-section reveal">
-  <div class="sys-title">My Exact 3-Step System to <span class="green">$10K/Month</span></div>
-  <div class="tag-outer">
-    <span class="tag-pin"></span>
-    <div class="tag-card">
-      <h3>Source The Deals</h3>
-      <p class="tdesc">Access my <strong>private vendors</strong> for untapped products at <strong>wholesale prices</strong>.</p>
-      <div class="tag-divider"></div>
-      <ul>
-        <li><strong>OEM vendors</strong> that pass StockX authentication.</li>
-        <li>High-ticket items with <strong>guaranteed margins</strong>.</li>
-        <li>Skip the middlemen & <strong>source direct</strong>.</li>
-      </ul>
+<section class="section-wrap reveal">
+  <h2 class="section-h" style="text-align:center;margin-bottom:48px;">
+    My Exact 3-Step System to <span class="green-patch">$10K/Month</span>
+  </h2>
+
+  <div class="tag-grid">
+    <div class="tag-outer">
+      <span class="tag-pin"></span>
+      <div class="tag-card">
+        <h3>Source The Deals</h3>
+        <p class="tdesc">Access my <strong>private vendors</strong> for untapped products at <strong>wholesale prices</strong>.</p>
+        <div class="tag-divider"></div>
+        <ul>
+          <li><strong>OEM vendors</strong> that pass StockX authentication.</li>
+          <li>High-ticket items with <strong>guaranteed margins</strong>.</li>
+          <li>Skip the middlemen & <strong>source direct</strong>.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tag-outer">
+      <span class="tag-pin"></span>
+      <div class="tag-card">
+        <h3>Sell With Confidence</h3>
+        <p class="tdesc"><strong>100% authentic OEM products</strong> — no replicas, no legal trouble, no bans.</p>
+        <div class="tag-divider"></div>
+        <ul>
+          <li><strong>Pass authentication</strong> on StockX & GOAT every time.</li>
+          <li><strong>Zero customer complaints</strong> — happy buyers, easy sales.</li>
+          <li><strong>Never worry</strong> about account bans or legal issues.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tag-outer">
+      <span class="tag-pin"></span>
+      <div class="tag-card">
+        <h3>Scale To $10K+/Month</h3>
+        <p class="tdesc">Get a <strong>custom action plan</strong> built for your situation to hit $10K/month.</p>
+        <div class="tag-divider"></div>
+        <ul>
+          <li><strong>1-on-1 onboarding call</strong> with Lucas to map your path.</li>
+          <li><strong>Weekly group calls</strong> — get your questions answered live.</li>
+          <li><strong>Skool & Discord</strong> community with 200+ active members.</li>
+          <li><strong>10+ hours of training</strong> — learn at your own pace.</li>
+        </ul>
+      </div>
     </div>
   </div>
-  <div class="tag-outer">
-    <span class="tag-pin"></span>
-    <div class="tag-card">
-      <h3>Sell With Confidence</h3>
-      <p class="tdesc"><strong>100% authentic OEM products</strong> — no replicas, no legal trouble, no bans.</p>
-      <div class="tag-divider"></div>
-      <ul>
-        <li><strong>Pass authentication</strong> on StockX & GOAT every time.</li>
-        <li><strong>Zero customer complaints</strong> — happy buyers, easy sales.</li>
-        <li><strong>Never worry</strong> about account bans or legal issues.</li>
-      </ul>
-    </div>
+
+  <div class="sys-cta-wrap">
+    <a href="#apply" class="sys-cta ripple-btn">Apply For The Inner Circle ↗</a>
   </div>
-  <div class="tag-outer">
-    <span class="tag-pin"></span>
-    <div class="tag-card">
-      <h3>Scale To $10K+/Month</h3>
-      <p class="tdesc">Get a <strong>custom action plan</strong> built for your situation to hit $10K/month.</p>
-      <div class="tag-divider"></div>
-      <ul>
-        <li><strong>1-on-1 onboarding call</strong> with Lucas to map your path.</li>
-        <li><strong>Weekly group calls</strong> — get your questions answered live.</li>
-        <li><strong>Skool & Discord</strong> community with 200+ active members.</li>
-        <li><strong>10+ hours of training</strong> — learn at your own pace.</li>
-      </ul>
-    </div>
-  </div>
-  <a href="#apply" style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green);color:#000;font-weight:800;font-size:17px;padding:18px 28px;border-radius:12px;text-decoration:none;box-shadow:0 0 30px var(--green-glow);letter-spacing:-0.2px;">Apply For The Inner Circle ↗</a>
 </section>
 
 <!-- RESULTS -->
-<section class="results-section reveal">
-  <div class="res-badge"><span class="res-dot"></span>REAL RESULTS</div>
-  <h2>Students Are <span class="green">Winning</span> Every Day</h2>
-  <p class="rsub">Hear directly from Inner Circle members who transformed their life with our system</p>
-  <div class="yt-card">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="$27K" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <div class="yt-info"><div class="yt-t">16 Year Old: $0 → $27,000/Month</div><div class="yt-s">Inner Circle Member</div></div>
+<section class="section-wrap narrow reveal">
+  <div class="res-badge-wrap">
+    <span class="res-badge"><span class="res-dot"></span>REAL RESULTS</span>
   </div>
-  <div class="yt-card">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="$22K" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <div class="yt-info"><div class="yt-t">15 Year Old Hitting $22K/Month</div><div class="yt-s">Inner Circle Member</div></div>
+  <h2 class="section-h" style="margin-bottom:8px;">
+    Members Are <span class="green">Winning</span> Every Day
+  </h2>
+  <p class="rsub">Real sales from real Inner Circle members — verified &amp; paid out</p>
+
+  <div class="photo-card">
+    <img src="photos/imagesweat.png" alt="Fear of God Essentials Hoodie sold for $194 – $154.27 earned after fees" loading="lazy" width="780" height="460">
+    <div class="photo-info">
+      <div class="photo-t">Fear of God Essentials Hoodie — $154.27 Earned</div>
+      <div class="photo-s">Sold on StockX · Passed verification ✓</div>
+    </div>
   </div>
-  <div class="yt-card">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Corvette" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <div class="yt-info"><div class="yt-t">He Bought a C8 Corvette From Reselling</div><div class="yt-s">Inner Circle Member</div></div>
+
+  <div class="photo-card">
+    <img src="photos/imagebag.png" alt="Supreme Dufflebag Black SS19 sold for $245 – $194.59 earned after fees" loading="lazy" width="780" height="460">
+    <div class="photo-info">
+      <div class="photo-t">Supreme Dufflebag 'Black' — $194.59 Earned</div>
+      <div class="photo-s">Sold on StockX · Passed verification ✓</div>
+    </div>
   </div>
-  <div class="yt-card">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="$8K" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <div class="yt-info"><div class="yt-t">16 Year Old: $0 → $8K/Month</div><div class="yt-s">Inner Circle Member</div></div>
-  </div>
+  <!-- Add more: <div class="photo-card"><img src="photos/NAME.png" ...> -->
 </section>
 
 <!-- FAQ -->
-<section class="faq-section reveal">
-  <h2>Frequently Asked Questions</h2>
-  <div class="faq-item" onclick="toggleFaq(this)">
-    <div class="faq-q">Are these vendors legit? <span class="faq-icon">+</span></div>
-    <div class="faq-a">Yes. These are the same OEM vendors our Inner Circle members use to pass StockX and GOAT authentication every single time. 100% authentic products.</div>
+<section class="section-wrap narrow reveal" itemscope itemtype="https://schema.org/FAQPage">
+  <h2 class="section-h" style="text-align:center;margin-bottom:40px;">Frequently Asked Questions</h2>
+
+  <div class="faq-item" onclick="toggleFaq(this)" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <div class="faq-q" itemprop="name">Are these vendors legit? <span class="faq-icon">+</span></div>
+    <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <span itemprop="text">Yes. These are the same OEM vendors our Inner Circle members use to pass StockX and GOAT authentication every single time. 100% authentic products.</span>
+    </div>
   </div>
-  <div class="faq-item" onclick="toggleFaq(this)">
-    <div class="faq-q">How fast can I start making money? <span class="faq-icon">+</span></div>
-    <div class="faq-a">You can place your first order and list products the same day you get access. Many members make their first sale within the first week.</div>
+  <div class="faq-item" onclick="toggleFaq(this)" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <div class="faq-q" itemprop="name">How fast can I start making money? <span class="faq-icon">+</span></div>
+    <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <span itemprop="text">You can place your first order and list products the same day you get access. Many members make their first sale within the first week.</span>
+    </div>
   </div>
-  <div class="faq-item" onclick="toggleFaq(this)">
-    <div class="faq-q">What's the difference between Premium Vendors and the Discord? <span class="faq-icon">+</span></div>
-    <div class="faq-a">Premium Vendors gives you instant lifetime access to 50+ vendor contacts. The Discord includes vendors PLUS weekly coaching calls, view bots, methods, and community support.</div>
+  <div class="faq-item" onclick="toggleFaq(this)" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <div class="faq-q" itemprop="name">What's the difference between Premium Vendors and the Discord? <span class="faq-icon">+</span></div>
+    <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <span itemprop="text">Premium Vendors gives you instant lifetime access to 50+ vendor contacts. The Discord includes vendors PLUS weekly coaching calls, view bots, methods, and community support.</span>
+    </div>
   </div>
-  <div class="faq-item" onclick="toggleFaq(this)">
-    <div class="faq-q">Do I need experience to start? <span class="faq-icon">+</span></div>
-    <div class="faq-a">No experience needed. Our vendors and resources are beginner-friendly. The Free Vendor option is perfect if you're just getting started.</div>
+  <div class="faq-item" onclick="toggleFaq(this)" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <div class="faq-q" itemprop="name">Do I need experience to start? <span class="faq-icon">+</span></div>
+    <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <span itemprop="text">No experience needed. Our vendors and resources are beginner-friendly. Everything is explained step-by-step inside the community.</span>
+    </div>
   </div>
 </section>
 
 <!-- BOTTOM CTA -->
 <div class="bottom-cta">
-  <a href="#apply" class="bottom-cta-btn">Join The Inner Circle ↗</a>
+  <a href="#apply" class="bottom-cta-btn ripple-btn">Join The Inner Circle ↗</a>
   <p class="bottom-sub">Start your journey to $10K/month</p>
 </div>
 
-<!-- FOOTER --> <footer> <p class="foot-copy">© 2026 OGs Inner Circle. All Rights Reserved.</p> <span class="built-badge">⚡ Built for OGs Inner Circle</span> </footer>
+<!-- FOOTER -->
+<footer>
+  <p class="foot-copy">© 2026 OGs Inner Circle. All Rights Reserved.</p>
+  <span class="built-badge">⚡ Built for OGs Inner Circle</span>
+</footer>
 
-<script>
-const TOTAL = 5;
-let cur = 1;
-const ans = {};
-
-if (window.innerWidth > 768) {
-  const glow = document.createElement('div');
-  glow.className = 'cursor-glow';
-  document.body.appendChild(glow);
-  document.addEventListener('mousemove', e => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
-}
-
-
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-document.addEventListener('click', e => {
-  const btn = e.target.closest('.ripple-btn');
-  if (!btn) return;
-  const r = document.createElement('span');
-  r.className = 'ripple';
-  const rect = btn.getBoundingClientRect();
-  const size = Math.max(rect.width, rect.height);
-  r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
-  btn.appendChild(r);
-  setTimeout(() => r.remove(), 700);
-});
-
-function buildDots(active) {
-  for (let i = 1; i <= TOTAL; i++) {
-    const c = document.getElementById('d' + i);
-    if (!c) continue;
-    c.innerHTML = '';
-    for (let d = 1; d <= TOTAL; d++) {
-      const el = document.createElement('div');
-      el.className = 'dot' + (d === active ? ' active' : d < active ? ' done' : '');
-      c.appendChild(el);
-    }
-  }
-  const sc = document.getElementById('d-ok');
-  if (sc) { sc.innerHTML = ''; for (let d = 0; d < TOTAL; d++) { const el = document.createElement('div'); el.className = 'dot done'; sc.appendChild(el); } }
-}
-
-function showQ(n) {
-  document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
-  const el = document.getElementById('q' + n) || document.getElementById('q-ok');
-  if (el) el.classList.add('active');
-  cur = n; buildDots(n);
-  setTimeout(() => document.getElementById('theForm').scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
-}
-
-function pick(qId, el) {
-  const num = qId.replace('q', '');
-  document.querySelectorAll('#c' + num + ' .choice').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  ans[qId] = el.dataset.v;
-  document.getElementById('e' + num).textContent = '';
-  const okBtn = document.querySelector('#q' + num + ' .btn-ok');
-  if (okBtn) okBtn.classList.add('ready');
-  setTimeout(() => next(parseInt(num)), 320);
-}
-
-function validate(n) {
-  if (n <= 3 && !ans['q' + n]) { document.getElementById('e' + n).textContent = 'Please select an option.'; shake('q' + n); return false; }
-  if (n === 4) {
-    const v = document.getElementById('emailVal').value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { document.getElementById('e4').textContent = 'Please enter a valid email.'; shake('q4'); return false; }
-    ans.email = v;
-  }
-  if (n === 5) {
-    const fn = document.getElementById('firstName').value.trim();
-    const ph = document.getElementById('phoneVal').value.trim();
-    if (!fn) { document.getElementById('e5').textContent = 'Please enter your first name.'; shake('q5'); return false; }
-    if (!ph) { document.getElementById('e5').textContent = 'Please enter your phone number.'; shake('q5'); return false; }
-    ans.name = fn + ' ' + document.getElementById('lastName').value.trim();
-    ans.phone = ph;
-  }
-  return true;
-}
-
-function shake(qId) {
-  const el = document.getElementById(qId);
-  if (!el) return;
-  el.style.animation = 'none'; el.offsetHeight;
-  el.style.animation = 'shake 0.4s ease';
-}
-const ss = document.createElement('style');
-ss.textContent = `@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}`;
-document.head.appendChild(ss);
-
-function next(n) {
-  if (!validate(n)) return;
-  if (n < TOTAL) {
-    showQ(n + 1);
-    if (n + 1 === 4) setTimeout(() => document.getElementById('emailVal').focus(), 200);
-    if (n + 1 === 5) setTimeout(() => document.getElementById('firstName').focus(), 200);
-  } else { submit(); }
-}
-function back(n) { if (n > 1) showQ(n - 1); }
-
-function submit() {
-  // Fill the hidden Formspree form fields
-  document.getElementById('f-experience').value = ans.q1   || '';
-  document.getElementById('f-goal').value       = ans.q2   || '';
-  document.getElementById('f-age').value        = ans.q3   || '';
-  document.getElementById('f-email').value      = ans.email || '';
-  document.getElementById('f-name').value       = ans.name  || '';
-  document.getElementById('f-phone').value      = ans.phone || '';
-
-  // Send to Formspree in the background — no page redirect
-  fetch('https://formspree.io/f/mdalegvn', {
-    method: 'POST',
-    body: new FormData(document.getElementById('fs-form')),
-    headers: { 'Accept': 'application/json' }
-  });
-
-  // Show success screen
-  document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
-  document.getElementById('q-ok').classList.add('active');
-  buildDots(99);
-  setTimeout(() => document.getElementById('theForm').scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-  launchConfetti();
-}
-
-function launchConfetti() {
-  const colors = ['#39ff00','#ffffff','#a0ff60','#00ff88'];
-  for (let i = 0; i < 60; i++) {
-    const el = document.createElement('div');
-    const size = Math.random() * 8 + 4;
-    el.style.cssText = `position:fixed;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'2px'};left:${Math.random()*100}vw;top:-10px;z-index:9999;pointer-events:none;opacity:${Math.random()*.8+.2};animation:confettiFall ${Math.random()*1.5+1}s ${Math.random()*.8}s ease-in forwards;`;
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 3000);
-  }
-  const css = document.createElement('style');
-  css.textContent = `@keyframes confettiFall{from{transform:translateY(0) rotate(0deg);opacity:1;}to{transform:translateY(100vh) rotate(720deg);opacity:0;}}`;
-  document.head.appendChild(css);
-}
-
-function toggleFaq(el) {
-  const isOpen = el.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
-  if (!isOpen) el.classList.add('open');
-}
-
-document.addEventListener('keydown', e => {
-  if (document.activeElement.tagName === 'INPUT') { if (e.key === 'Enter') { e.preventDefault(); next(cur); } return; }
-  if (e.key === 'Enter' && cur <= TOTAL) next(cur);
-  if (cur >= 1 && cur <= 3) {
-    const map = {a:0,b:1,c:2,d:3,e:4};
-    const idx = map[e.key.toLowerCase()];
-    if (idx !== undefined) { const items = document.querySelectorAll('#c' + cur + ' .choice'); if (items[idx]) items[idx].click(); }
-  }
-});
-
-document.querySelectorAll('.hero-cta, .btn-ok, .bottom-cta-btn').forEach(el => el.classList.add('ripple-btn'));
-buildDots(1);
-</script>
+<script src="main.js"></script>
 </body>
 </html>
