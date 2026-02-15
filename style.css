@@ -56,6 +56,12 @@ body::before {
   z-index: 10;
 }
 
+@media(max-width:768px) {
+  body::before {
+    height: 30px;
+  }
+}
+
 /* ── PAGE LOAD REVEAL ── */
 @keyframes pageReveal {
   from {
@@ -86,7 +92,7 @@ body::before {
 
 @media(max-width:768px) {
   .hero {
-    padding: 40px 20px 0;
+    padding: 80px 20px 0;
   }
 }
 
