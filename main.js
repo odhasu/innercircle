@@ -2,26 +2,26 @@
 
 // ── COUNTRIES ──
 const COUNTRIES = [
-  {f:'🇺🇸',c:'+1',n:'United States'},{f:'🇬🇧',c:'+44',n:'United Kingdom'},{f:'🇨🇦',c:'+1',n:'Canada'},
-  {f:'🇦🇺',c:'+61',n:'Australia'},{f:'🇩🇪',c:'+49',n:'Germany'},{f:'🇫🇷',c:'+33',n:'France'},
-  {f:'🇳🇱',c:'+31',n:'Netherlands'},{f:'🇧🇪',c:'+32',n:'Belgium'},{f:'🇨🇭',c:'+41',n:'Switzerland'},
-  {f:'🇦🇹',c:'+43',n:'Austria'},{f:'🇮🇹',c:'+39',n:'Italy'},{f:'🇪🇸',c:'+34',n:'Spain'},
-  {f:'🇵🇹',c:'+351',n:'Portugal'},{f:'🇸🇪',c:'+46',n:'Sweden'},{f:'🇳🇴',c:'+47',n:'Norway'},
-  {f:'🇩🇰',c:'+45',n:'Denmark'},{f:'🇫🇮',c:'+358',n:'Finland'},{f:'🇵🇱',c:'+48',n:'Poland'},
-  {f:'🇨🇿',c:'+420',n:'Czech Republic'},{f:'🇷🇴',c:'+40',n:'Romania'},{f:'🇬🇷',c:'+30',n:'Greece'},
-  {f:'🇭🇺',c:'+36',n:'Hungary'},{f:'🇧🇬',c:'+359',n:'Bulgaria'},{f:'🇭🇷',c:'+385',n:'Croatia'},
-  {f:'🇸🇰',c:'+421',n:'Slovakia'},{f:'🇷🇸',c:'+381',n:'Serbia'},{f:'🇺🇦',c:'+380',n:'Ukraine'},
-  {f:'🇷🇺',c:'+7',n:'Russia'},{f:'🇹🇷',c:'+90',n:'Turkey'},{f:'🇮🇱',c:'+972',n:'Israel'},
-  {f:'🇸🇦',c:'+966',n:'Saudi Arabia'},{f:'🇦🇪',c:'+971',n:'UAE'},{f:'🇶🇦',c:'+974',n:'Qatar'},
-  {f:'🇰🇼',c:'+965',n:'Kuwait'},{f:'🇧🇭',c:'+973',n:'Bahrain'},{f:'🇮🇳',c:'+91',n:'India'},
-  {f:'🇨🇳',c:'+86',n:'China'},{f:'🇯🇵',c:'+81',n:'Japan'},{f:'🇰🇷',c:'+82',n:'South Korea'},
-  {f:'🇸🇬',c:'+65',n:'Singapore'},{f:'🇲🇾',c:'+60',n:'Malaysia'},{f:'🇵🇭',c:'+63',n:'Philippines'},
-  {f:'🇹🇭',c:'+66',n:'Thailand'},{f:'🇮🇩',c:'+62',n:'Indonesia'},{f:'🇻🇳',c:'+84',n:'Vietnam'},
-  {f:'🇳🇿',c:'+64',n:'New Zealand'},{f:'🇿🇦',c:'+27',n:'South Africa'},{f:'🇳🇬',c:'+234',n:'Nigeria'},
-  {f:'🇰🇪',c:'+254',n:'Kenya'},{f:'🇬🇭',c:'+233',n:'Ghana'},{f:'🇪🇬',c:'+20',n:'Egypt'},
-  {f:'🇲🇦',c:'+212',n:'Morocco'},{f:'🇧🇷',c:'+55',n:'Brazil'},{f:'🇲🇽',c:'+52',n:'Mexico'},
-  {f:'🇦🇷',c:'+54',n:'Argentina'},{f:'🇨🇴',c:'+57',n:'Colombia'},{f:'🇨🇱',c:'+56',n:'Chile'},
-  {f:'🇵🇪',c:'+51',n:'Peru'},{f:'🇯🇲',c:'+1',n:'Jamaica'},{f:'🇹🇹',c:'+1',n:'Trinidad & Tobago'},
+  { f: '🇺🇸', c: '+1', n: 'United States' }, { f: '🇬🇧', c: '+44', n: 'United Kingdom' }, { f: '🇨🇦', c: '+1', n: 'Canada' },
+  { f: '🇦🇺', c: '+61', n: 'Australia' }, { f: '🇩🇪', c: '+49', n: 'Germany' }, { f: '🇫🇷', c: '+33', n: 'France' },
+  { f: '🇳🇱', c: '+31', n: 'Netherlands' }, { f: '🇧🇪', c: '+32', n: 'Belgium' }, { f: '🇨🇭', c: '+41', n: 'Switzerland' },
+  { f: '🇦🇹', c: '+43', n: 'Austria' }, { f: '🇮🇹', c: '+39', n: 'Italy' }, { f: '🇪🇸', c: '+34', n: 'Spain' },
+  { f: '🇵🇹', c: '+351', n: 'Portugal' }, { f: '🇸🇪', c: '+46', n: 'Sweden' }, { f: '🇳🇴', c: '+47', n: 'Norway' },
+  { f: '🇩🇰', c: '+45', n: 'Denmark' }, { f: '🇫🇮', c: '+358', n: 'Finland' }, { f: '🇵🇱', c: '+48', n: 'Poland' },
+  { f: '🇨🇿', c: '+420', n: 'Czech Republic' }, { f: '🇷🇴', c: '+40', n: 'Romania' }, { f: '🇬🇷', c: '+30', n: 'Greece' },
+  { f: '🇭🇺', c: '+36', n: 'Hungary' }, { f: '🇧🇬', c: '+359', n: 'Bulgaria' }, { f: '🇭🇷', c: '+385', n: 'Croatia' },
+  { f: '🇸🇰', c: '+421', n: 'Slovakia' }, { f: '🇷🇸', c: '+381', n: 'Serbia' }, { f: '🇺🇦', c: '+380', n: 'Ukraine' },
+  { f: '🇷🇺', c: '+7', n: 'Russia' }, { f: '🇹🇷', c: '+90', n: 'Turkey' }, { f: '🇮🇱', c: '+972', n: 'Israel' },
+  { f: '🇸🇦', c: '+966', n: 'Saudi Arabia' }, { f: '🇦🇪', c: '+971', n: 'UAE' }, { f: '🇶🇦', c: '+974', n: 'Qatar' },
+  { f: '🇰🇼', c: '+965', n: 'Kuwait' }, { f: '🇧🇭', c: '+973', n: 'Bahrain' }, { f: '🇮🇳', c: '+91', n: 'India' },
+  { f: '🇨🇳', c: '+86', n: 'China' }, { f: '🇯🇵', c: '+81', n: 'Japan' }, { f: '🇰🇷', c: '+82', n: 'South Korea' },
+  { f: '🇸🇬', c: '+65', n: 'Singapore' }, { f: '🇲🇾', c: '+60', n: 'Malaysia' }, { f: '🇵🇭', c: '+63', n: 'Philippines' },
+  { f: '🇹🇭', c: '+66', n: 'Thailand' }, { f: '🇮🇩', c: '+62', n: 'Indonesia' }, { f: '🇻🇳', c: '+84', n: 'Vietnam' },
+  { f: '🇳🇿', c: '+64', n: 'New Zealand' }, { f: '🇿🇦', c: '+27', n: 'South Africa' }, { f: '🇳🇬', c: '+234', n: 'Nigeria' },
+  { f: '🇰🇪', c: '+254', n: 'Kenya' }, { f: '🇬🇭', c: '+233', n: 'Ghana' }, { f: '🇪🇬', c: '+20', n: 'Egypt' },
+  { f: '🇲🇦', c: '+212', n: 'Morocco' }, { f: '🇧🇷', c: '+55', n: 'Brazil' }, { f: '🇲🇽', c: '+52', n: 'Mexico' },
+  { f: '🇦🇷', c: '+54', n: 'Argentina' }, { f: '🇨🇴', c: '+57', n: 'Colombia' }, { f: '🇨🇱', c: '+56', n: 'Chile' },
+  { f: '🇵🇪', c: '+51', n: 'Peru' }, { f: '🇯🇲', c: '+1', n: 'Jamaica' }, { f: '🇹🇹', c: '+1', n: 'Trinidad & Tobago' },
 ];
 
 function buildCountrySelect() {
@@ -62,7 +62,7 @@ document.addEventListener('click', e => {
   r.className = 'ripple';
   const rect = btn.getBoundingClientRect();
   const size = Math.max(rect.width, rect.height);
-  r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+  r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size / 2}px;top:${e.clientY - rect.top - size / 2}px`;
   btn.appendChild(r);
   setTimeout(() => r.remove(), 700);
 });
@@ -133,7 +133,7 @@ function validate(n) {
     const ph = document.getElementById('phoneVal').value.trim();
     if (!fn) { document.getElementById('e5').textContent = 'Please enter your first name.'; shake('q5'); return false; }
     if (!ph) { document.getElementById('e5').textContent = 'Please enter your phone number.'; shake('q5'); return false; }
-    ans.name  = fn + ' ' + document.getElementById('lastName').value.trim();
+    ans.name = fn + ' ' + document.getElementById('lastName').value.trim();
     const code = document.getElementById('codeDisplay').textContent;
     ans.phone = code + ' ' + ph;
   }
@@ -162,20 +162,39 @@ function next(n) {
 function back(n) { if (n > 1) showQ(n - 1); }
 
 // ── SUBMIT → FORMSPREE ──
-function submitForm() {
-  document.getElementById('f-experience').value = ans.q1    || '';
-  document.getElementById('f-goal').value       = ans.q2    || '';
-  document.getElementById('f-age').value        = ans.q3    || '';
-  document.getElementById('f-email').value      = ans.email || '';
-  document.getElementById('f-name').value       = ans.name  || '';
-  document.getElementById('f-phone').value      = ans.phone || '';
+// ── SUPABASE CONFIG ──
+const SUPABASE_URL = 'https://eqmagffuzblywevszosw.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVxbWFnZmZ1emJseXdldnN6b3N3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA5MTgwNjcsImV4cCI6MjA4NjQ5NDA2N30.dlSSmQK2C_7ArHOI-SttFLO7hqRoFCLFcDu1n_6VjsY';
+const TABLE_NAME = 'leads';
 
-  fetch('https://formspree.io/f/mdalegvn', {
-    method: 'POST',
-    body: new FormData(document.getElementById('fs-form')),
-    headers: { 'Accept': 'application/json' }
-  }).catch(() => {}); // silent fail — user already sees success
+// Initialize Supabase
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// ── SUBMIT → SUPABASE ──
+async function submitForm() {
+  // 1. Prepare data object
+  const data = {
+    experience: ans.q1 || '',
+    goal: ans.q2 || '',
+    age: ans.q3 || '',
+    email: ans.email || '',
+    name: ans.name || '',
+    phone: ans.phone || '',
+    created_at: new Date().toISOString()
+  };
+
+  // 2. Insert into Supabase
+  const { error } = await supabase
+    .from(TABLE_NAME)
+    .insert([data]);
+
+  if (error) {
+    console.error('Error submitting form:', error);
+    alert('There was an error submitting your application. Please try again.');
+    return;
+  }
+
+  // 3. Success UI
   document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
   document.getElementById('q-ok').classList.add('active');
   buildDots(99);
@@ -187,7 +206,7 @@ function submitForm() {
 
 // ── CONFETTI ──
 function launchConfetti() {
-  const colors = ['#39FF14','#ffffff','#a0ff60','#00ff88'];
+  const colors = ['#39FF14', '#ffffff', '#a0ff60', '#00ff88'];
   for (let i = 0; i < 70; i++) {
     const el = document.createElement('div');
     const size = Math.random() * 8 + 4;
@@ -225,7 +244,7 @@ document.addEventListener('keydown', e => {
   }
   if (e.key === 'Enter' && cur <= TOTAL) { next(cur); return; }
   if (cur >= 1 && cur <= 3) {
-    const map = { a:0, b:1, c:2, d:3, e:4 };
+    const map = { a: 0, b: 1, c: 2, d: 3, e: 4 };
     const idx = map[e.key.toLowerCase()];
     if (idx !== undefined) {
       const items = document.querySelectorAll('#c' + cur + ' .choice');
