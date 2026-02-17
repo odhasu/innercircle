@@ -42,7 +42,7 @@ function buildCountrySelect() {
 }
 
 // ── FORM STATE ──
-const TOTAL = 5;
+const TOTAL = 6;
 let cur = 1;
 const ans = {};
 
@@ -116,23 +116,23 @@ function pick(qId, el) {
 
 // ── VALIDATE ──
 function validate(n) {
-  if (n <= 3 && !ans['q' + n]) {
+  if (n <= 4 && !ans['q' + n]) {
     document.getElementById('e' + n).textContent = 'Please select an option.';
     shake('q' + n); return false;
   }
-  if (n === 4) {
+  if (n === 5) {
     const v = document.getElementById('emailVal').value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
-      document.getElementById('e4').textContent = 'Please enter a valid email address.';
-      shake('q4'); return false;
+      document.getElementById('e5').textContent = 'Please enter a valid email address.';
+      shake('q5'); return false;
     }
     ans.email = v;
   }
-  if (n === 5) {
+  if (n === 6) {
     const fn = document.getElementById('firstName').value.trim();
     const ph = document.getElementById('phoneVal').value.trim();
-    if (!fn) { document.getElementById('e5').textContent = 'Please enter your first name.'; shake('q5'); return false; }
-    if (!ph) { document.getElementById('e5').textContent = 'Please enter your phone number.'; shake('q5'); return false; }
+    if (!fn) { document.getElementById('e6').textContent = 'Please enter your first name.'; shake('q6'); return false; }
+    if (!ph) { document.getElementById('e6').textContent = 'Please enter your phone number.'; shake('q6'); return false; }
     ans.name = fn + ' ' + document.getElementById('lastName').value.trim();
     const code = document.getElementById('codeDisplay').textContent;
     ans.phone = code + ' ' + ph;
@@ -153,8 +153,8 @@ function next(n) {
   if (!validate(n)) return;
   if (n < TOTAL) {
     showQ(n + 1);
-    if (n + 1 === 4) setTimeout(() => document.getElementById('emailVal').focus(), 200);
-    if (n + 1 === 5) setTimeout(() => document.getElementById('firstName').focus(), 200);
+    if (n + 1 === 5) setTimeout(() => document.getElementById('emailVal').focus(), 200);
+    if (n + 1 === 6) setTimeout(() => document.getElementById('firstName').focus(), 200);
   } else {
     submitForm();
   }
@@ -162,39 +162,21 @@ function next(n) {
 function back(n) { if (n > 1) showQ(n - 1); }
 
 // ── SUBMIT → FORMSPREE ──
-// ── SUPABASE CONFIG ──
-const SUPABASE_URL = 'https://eqmagffuzblywevszosw.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVxbWFnZmZ1emJseXdldnN6b3N3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA5MTgwNjcsImV4cCI6MjA4NjQ5NDA2N30.dlSSmQK2C_7ArHOI-SttFLO7hqRoFCLFcDu1n_6VjsY';
-const TABLE_NAME = 'leads';
+function submitForm() {
+  document.getElementById('f-experience').value = ans.q1 || '';
+  document.getElementById('f-goal').value = ans.q2 || '';
+  document.getElementById('f-age').value = ans.q3 || '';
+  document.getElementById('f-budget').value = ans.q4 || '';
+  document.getElementById('f-email').value = ans.email || '';
+  document.getElementById('f-name').value = ans.name || '';
+  document.getElementById('f-phone').value = ans.phone || '';
 
-// Initialize Supabase
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  fetch('https://formspree.io/f/mdalegvn', {
+    method: 'POST',
+    body: new FormData(document.getElementById('fs-form')),
+    headers: { 'Accept': 'application/json' }
+  }).catch(() => { }); // silent fail — user already sees success
 
-// ── SUBMIT → SUPABASE ──
-async function submitForm() {
-  // 1. Prepare data object
-  const data = {
-    experience: ans.q1 || '',
-    goal: ans.q2 || '',
-    age: ans.q3 || '',
-    email: ans.email || '',
-    name: ans.name || '',
-    phone: ans.phone || '',
-    created_at: new Date().toISOString()
-  };
-
-  // 2. Insert into Supabase
-  const { error } = await supabase
-    .from(TABLE_NAME)
-    .insert([data]);
-
-  if (error) {
-    console.error('Error submitting form:', error);
-    alert('There was an error submitting your application. Please try again.');
-    return;
-  }
-
-  // 3. Success UI
   document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
   document.getElementById('q-ok').classList.add('active');
   buildDots(99);
@@ -238,12 +220,28 @@ function toggleFaq(el) {
 // ── KEYBOARD SHORTCUTS ──
 document.addEventListener('keydown', e => {
   const tag = document.activeElement.tagName;
+
+  // If we are on the Name/Phone step (step 6), handle Enter navigation between fields
+  if (cur === 6 && e.key === 'Enter') {
+    e.preventDefault();
+    const active = document.activeElement;
+    if (active.id === 'firstName') {
+      document.getElementById('lastName').focus();
+    } else if (active.id === 'lastName') {
+      document.getElementById('phoneVal').focus();
+    } else {
+      // If on phone or button, try to validate and proceed
+      next(cur);
+    }
+    return;
+  }
+
   if (tag === 'INPUT' || tag === 'SELECT') {
     if (e.key === 'Enter') { e.preventDefault(); next(cur); }
     return;
   }
   if (e.key === 'Enter' && cur <= TOTAL) { next(cur); return; }
-  if (cur >= 1 && cur <= 3) {
+  if (cur >= 1 && cur <= 4) {
     const map = { a: 0, b: 1, c: 2, d: 3, e: 4 };
     const idx = map[e.key.toLowerCase()];
     if (idx !== undefined) {
@@ -252,6 +250,7 @@ document.addEventListener('keydown', e => {
     }
   }
 });
+
 
 // ── INIT ──
 buildDots(1);

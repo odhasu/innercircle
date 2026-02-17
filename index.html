@@ -94,6 +94,7 @@
     <input type="hidden" name="experience" id="f-experience">
     <input type="hidden" name="goal" id="f-goal">
     <input type="hidden" name="age" id="f-age">
+    <input type="hidden" name="budget" id="f-budget">
     <input type="email" name="email" id="f-email">
     <input type="hidden" name="name" id="f-name">
     <input type="hidden" name="phone" id="f-phone">
@@ -107,18 +108,14 @@
     </div>
 
     <h1>
-      See How Regular People Are Building
-      <span class="green-patch">$5K-$30K/Month</span>
-      High-Ticket Reselling Businesses
+      See How Regular People Are<br>
+      Building <span class="green-patch">$5K-$30K/Month</span> High-<br>
+      Ticket Reselling Businesses
     </h1>
 
     <p class="hero-sub">The Exact System 200+ Members Use to Flip Authentic Products for Profit</p>
 
-    <div class="hero-video">
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="OGs Inner Circle – How It Works"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
-        loading="lazy"></iframe>
-    </div>
+
 
     <a href="#apply" class="hero-cta ripple-btn">Apply For The Inner Circle ↗</a>
   </section>
@@ -244,12 +241,24 @@
         <div class="dot-row" id="d3"></div>
       </div>
 
-      <!-- Q4: Email -->
+      <!-- Q4: Budget -->
       <div class="question" id="q4">
         <div class="q-inner">
           <div class="q-badge">4</div>
-          <div class="q-title"><span class="q-arrow">→</span>Got it — what's the best email to reach you at?</div>
-          <input class="q-input" type="email" id="emailVal" placeholder="name@example.com" autocomplete="email" />
+          <div class="q-title"><span class="q-arrow">→</span>Products typically cost $250-$1,000+ each. What's your
+            total
+            budget for getting started?</div>
+          <div class="choices" id="c4">
+            <div class="choice" data-v="under_200" onclick="pick('q4',this)"><span class="ck-key">A</span>Under $200 USD
+            </div>
+            <div class="choice" data-v="200-500" onclick="pick('q4',this)"><span class="ck-key">B</span>$200-$500 USD
+            </div>
+            <div class="choice" data-v="500-1k" onclick="pick('q4',this)"><span class="ck-key">C</span>$500-$1K USD
+            </div>
+            <div class="choice" data-v="1k-3k" onclick="pick('q4',this)"><span class="ck-key">D</span>$1K-$3K USD
+            </div>
+            <div class="choice" data-v="3k+" onclick="pick('q4',this)"><span class="ck-key">E</span>$3K+ USD</div>
+          </div>
         </div>
         <div class="q-error" id="e4"></div>
         <div class="q-footer">
@@ -266,10 +275,32 @@
         <div class="dot-row" id="d4"></div>
       </div>
 
-      <!-- Q5: Name + Phone -->
+      <!-- Q5: Email -->
       <div class="question" id="q5">
         <div class="q-inner">
           <div class="q-badge">5</div>
+          <div class="q-title"><span class="q-arrow">→</span>Got it — what's the best email to reach you at?</div>
+          <input class="q-input" type="email" id="emailVal" placeholder="name@example.com" autocomplete="email" />
+        </div>
+        <div class="q-error" id="e5"></div>
+        <div class="q-footer">
+          <button class="btn-back" onclick="back(5)" aria-label="Go back">
+            <svg viewBox="0 0 16 16" fill="none">
+              <path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>Back
+          </button>
+          <div class="enter-ok">
+            <span class="enter-hint">Press <kbd>Enter</kbd> to continue</span>
+            <button class="btn-ok ripple-btn" onclick="next(5)">OK →</button>
+          </div>
+        </div>
+        <div class="dot-row" id="d5"></div>
+      </div>
+
+      <!-- Q6: Name + Phone -->
+      <div class="question" id="q6">
+        <div class="q-inner">
+          <div class="q-badge">6</div>
           <div class="q-title"><span class="q-arrow">→</span>And your name and phone number?</div>
           <div class="input-row">
             <div>
@@ -290,35 +321,37 @@
             <input class="q-input" type="tel" id="phoneVal" placeholder="555 123 4567" autocomplete="tel-national" />
           </div>
         </div>
-        <div class="q-error" id="e5"></div>
+        <div class="q-error" id="e6"></div>
         <div class="q-footer">
-          <button class="btn-back" onclick="back(5)" aria-label="Go back">
+          <button class="btn-back" onclick="back(6)" aria-label="Go back">
             <svg viewBox="0 0 16 16" fill="none">
               <path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
             </svg>Back
           </button>
           <div class="enter-ok">
             <span class="enter-hint">Press <kbd>Enter</kbd> to continue</span>
-            <button class="btn-ok ripple-btn" onclick="next(5)">OK →</button>
+            <button class="btn-ok ripple-btn" onclick="next(6)">OK →</button>
           </div>
         </div>
-        <div class="dot-row" id="d5"></div>
+        <div class="dot-row" id="d6"></div>
       </div>
 
       <!-- SUCCESS -->
       <div class="question" id="q-ok">
-        <div class="success-wrap">
+        <div class="success-wrap new-success">
           <div class="success-ico">✓</div>
-          <h3>Application Received!</h3>
-          <p>We've reviewed your answers and sent your <strong>free reselling guide</strong> to your inbox. We'll reach
-            out personally within <strong>24 hours</strong> — keep an eye on your email.</p>
+          <h3 class="congrats-title">
+            Application Received!
+          </h3>
+          <p class="congrats-sub">We received your answers and will personally reach out to you shortly.</p>
+
           <div class="guide-card"
             style="margin-top:28px;background:rgba(0,0,0,0.6);border:1px solid rgba(57,255,20,0.22);border-radius:12px;padding:20px;">
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-              <span style="font-size:24px;">📩</span>
+              <span style="font-size:24px;">🎉</span>
               <div>
-                <div style="font-size:14px;font-weight:800;margin-bottom:2px;">Your Free Guide Is On Its Way</div>
-                <div style="font-size:13px;color:var(--muted);">Check your inbox (and spam just in case)</div>
+                <div style="font-size:14px;font-weight:800;margin-bottom:2px;">Download the free guide here</div>
+                <div style="font-size:13px;color:var(--muted);">Click the button below</div>
               </div>
             </div>
             <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;">
@@ -335,8 +368,6 @@
           </div>
           <a href="https://ogresell.shop/b/guide" target="_blank" rel="noopener" class="btn-guide ripple-btn">📖 Get
             Your Free Reselling Guide ↗</a>
-          <p style="font-size:12px;color:var(--muted);margin-top:10px;">We'll also reach out personally within <strong
-              style="color:var(--green);">24 hours</strong></p>
         </div>
         <div class="dot-row" id="d-ok"></div>
       </div>
@@ -344,17 +375,16 @@
     </div><!-- /clyro-form -->
   </section>
 
-  <!-- EXCLUSIVE RESOURCES -->
+  <!-- COMMUNITY -->
   <section class="section-wrap narrow reveal">
-    <div class="res-label">Exclusive Resources</div>
+    <div class="res-label">Community</div>
     <h2 class="section-h" style="text-align:center;margin-bottom:14px;">
-      Everything You Need to <span class="green">Start Reselling</span>
+      Join The <span class="green">Community</span>
     </h2>
-    <p class="res-sub">Get instant access to my verified vendors, free products, and private community.</p>
-    <div class="res-video">
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="OGs Inner Circle Resources Overview"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
-        loading="lazy"></iframe>
+    <p class="res-sub">Connect with members, share wins, and get help 24/7 in our Discord.</p>
+    <div style="text-align:center;margin-top:32px;">
+      <a href="https://discord.gg/w73SU3TcMG" class="sys-cta ripple-btn" style="width:100%;max-width:400px;">Join The
+        Community ↗</a>
     </div>
   </section>
 
@@ -413,34 +443,37 @@
     </div>
   </section>
 
-  <!-- RESULTS -->
-  <section class="section-wrap narrow reveal">
-    <div class="res-badge-wrap">
+  <!-- RESULTS SLIDER -->
+  <section class="section-wrap reveal" style="max-width:100%;padding:0 0 80px;overflow:hidden;">
+    <div class="res-badge-wrap" style="text-align:center;">
       <span class="res-badge"><span class="res-dot"></span>REAL RESULTS</span>
     </div>
-    <h2 class="section-h" style="margin-bottom:8px;">
+    <h2 class="section-h" style="text-align:center;margin-bottom:40px;">
       Members Are <span class="green">Winning</span> Every Day
     </h2>
-    <p class="rsub">Real sales from real Inner Circle members — verified &amp; paid out</p>
 
-    <div class="photo-card">
-      <img src="photos/imagesweat.png" alt="Fear of God Essentials Hoodie sold for $194 – $154.27 earned after fees"
-        loading="lazy" width="780" height="460">
-      <div class="photo-info">
-        <div class="photo-t">Fear of God Essentials Hoodie — $154.27 Earned</div>
-        <div class="photo-s">Sold on StockX · Passed verification ✓</div>
+    <div class="photo-ticker-wrap">
+      <div class="photo-ticker-track">
+        <!-- Original Set -->
+        <img src="photos/imagesweat.png" loading="lazy" alt="Result">
+        <img src="photos/imagebag.png" loading="lazy" alt="Result">
+        <img src="photos/IMG_0457.webp" loading="lazy" alt="Result">
+        <img src="photos/IMG_0468.webp" loading="lazy" alt="Result">
+        <img src="photos/IMG_4734.png" loading="lazy" alt="Result">
+        <img src="photos/IMG_7284.PNG" loading="lazy" alt="Result">
+        <img src="photos/image.png" loading="lazy" alt="Result">
+        <img src="photos/image (1).png" loading="lazy" alt="Result">
+        <!-- Duplicate Set for Loop -->
+        <img src="photos/imagesweat.png" loading="lazy" alt="Result">
+        <img src="photos/imagebag.png" loading="lazy" alt="Result">
+        <img src="photos/IMG_0457.webp" loading="lazy" alt="Result">
+        <img src="photos/IMG_0468.webp" loading="lazy" alt="Result">
+        <img src="photos/IMG_4734.png" loading="lazy" alt="Result">
+        <img src="photos/IMG_7284.PNG" loading="lazy" alt="Result">
+        <img src="photos/image.png" loading="lazy" alt="Result">
+        <img src="photos/image (1).png" loading="lazy" alt="Result">
       </div>
     </div>
-
-    <div class="photo-card">
-      <img src="photos/imagebag.png" alt="Supreme Dufflebag Black SS19 sold for $245 – $194.59 earned after fees"
-        loading="lazy" width="780" height="460">
-      <div class="photo-info">
-        <div class="photo-t">Supreme Dufflebag 'Black' — $194.59 Earned</div>
-        <div class="photo-s">Sold on StockX · Passed verification ✓</div>
-      </div>
-    </div>
-    <!-- Add more: <div class="photo-card"><img src="photos/NAME.png" ...> -->
   </section>
 
   <!-- FAQ -->
