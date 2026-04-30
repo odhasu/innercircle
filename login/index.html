@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OGs Inner Circle – Login</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="login-screen">
+    <div class="login-card">
+      <div class="login-logo">
+        <span class="login-logo-icon">⚡</span>
+        <span class="login-logo-text">OGs Inner Circle</span>
+      </div>
+      <h1 class="login-title">Admin Dashboard</h1>
+      <p class="login-sub">Enter your access code to continue</p>
+
+      <div class="login-field">
+        <input
+          type="password"
+          id="login-input"
+          class="login-input"
+          placeholder="Access code"
+          autocomplete="off"
+          maxlength="32"
+        />
+        <div id="login-error" class="login-error"></div>
+        <div id="login-lockout" class="login-lockout" style="display:none;"></div>
+      </div>
+
+      <button id="login-btn" class="login-btn ripple-btn" onclick="attemptLogin()">
+        <span id="login-btn-text">Access Dashboard →</span>
+      </button>
+
+      <div id="attempts-warning" class="attempts-warning" style="display:none;"></div>
+    </div>
+  </div>
+  <script src="login.js"></script>
+</body>
+</html>

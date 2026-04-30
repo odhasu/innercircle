@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OGs Inner Circle – Dashboard</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div id="dashboard" class="dashboard" style="display:none;">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span class="sidebar-icon">⚡</span>
+        <span>OGs Inner Circle</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" id="nav-applications">
+          <span class="nav-icon">📋</span> Applications
+        </a>
+        <a href="/" class="nav-item">
+          <span class="nav-icon">🌐</span> View Landing Page
+        </a>
+      </nav>
+      <button class="logout-btn" onclick="logout()">
+        <span>↩</span> Log Out
+      </button>
+    </aside>
+
+    <main class="main">
+      <div class="main-header">
+        <div>
+          <h2 class="main-title">Applications</h2>
+          <p class="main-sub">All submitted applications from the landing page</p>
+        </div>
+        <button class="refresh-btn ripple-btn" onclick="loadApplications()">
+          <span id="refresh-icon">↻</span> Refresh
+        </button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Total Applications</div>
+          <div class="stat-val" id="stat-total">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Today</div>
+          <div class="stat-val" id="stat-today">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Email Preference</div>
+          <div class="stat-val" id="stat-email">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">WhatsApp Preference</div>
+          <div class="stat-val" id="stat-whatsapp">—</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <div id="table-loader" class="table-loader">
+          <div class="spinner"></div>
+          <span>Loading applications...</span>
+        </div>
+        <div id="table-empty" class="table-empty" style="display:none;">
+          <span>📭</span>
+          <p>No applications yet</p>
+        </div>
+        <table id="applications-table" class="applications-table" style="display:none;">
+          <thead>
+            <tr>
+              <th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Experience</th>
+              <th>Goal</th><th>Budget</th><th>Age</th><th>Contact Via</th><th>Applied</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+  <script src="dashboard.js"></script>
+</body>
+</html>

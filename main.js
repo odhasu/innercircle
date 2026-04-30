@@ -1,257 +1,225 @@
-'use strict';
+/* ================================
+   OGs Inner Circle - App Logic
+================================ */
 
-// ── COUNTRIES ──
-const COUNTRIES = [
-  { f: '🇺🇸', c: '+1', n: 'United States' }, { f: '🇬🇧', c: '+44', n: 'United Kingdom' }, { f: '🇨🇦', c: '+1', n: 'Canada' },
-  { f: '🇦🇺', c: '+61', n: 'Australia' }, { f: '🇩🇪', c: '+49', n: 'Germany' }, { f: '🇫🇷', c: '+33', n: 'France' },
-  { f: '🇳🇱', c: '+31', n: 'Netherlands' }, { f: '🇧🇪', c: '+32', n: 'Belgium' }, { f: '🇨🇭', c: '+41', n: 'Switzerland' },
-  { f: '🇦🇹', c: '+43', n: 'Austria' }, { f: '🇮🇹', c: '+39', n: 'Italy' }, { f: '🇪🇸', c: '+34', n: 'Spain' },
-  { f: '🇵🇹', c: '+351', n: 'Portugal' }, { f: '🇸🇪', c: '+46', n: 'Sweden' }, { f: '🇳🇴', c: '+47', n: 'Norway' },
-  { f: '🇩🇰', c: '+45', n: 'Denmark' }, { f: '🇫🇮', c: '+358', n: 'Finland' }, { f: '🇵🇱', c: '+48', n: 'Poland' },
-  { f: '🇨🇿', c: '+420', n: 'Czech Republic' }, { f: '🇷🇴', c: '+40', n: 'Romania' }, { f: '🇬🇷', c: '+30', n: 'Greece' },
-  { f: '🇭🇺', c: '+36', n: 'Hungary' }, { f: '🇧🇬', c: '+359', n: 'Bulgaria' }, { f: '🇭🇷', c: '+385', n: 'Croatia' },
-  { f: '🇸🇰', c: '+421', n: 'Slovakia' }, { f: '🇷🇸', c: '+381', n: 'Serbia' }, { f: '🇺🇦', c: '+380', n: 'Ukraine' },
-  { f: '🇷🇺', c: '+7', n: 'Russia' }, { f: '🇹🇷', c: '+90', n: 'Turkey' }, { f: '🇮🇱', c: '+972', n: 'Israel' },
-  { f: '🇸🇦', c: '+966', n: 'Saudi Arabia' }, { f: '🇦🇪', c: '+971', n: 'UAE' }, { f: '🇶🇦', c: '+974', n: 'Qatar' },
-  { f: '🇰🇼', c: '+965', n: 'Kuwait' }, { f: '🇧🇭', c: '+973', n: 'Bahrain' }, { f: '🇮🇳', c: '+91', n: 'India' },
-  { f: '🇨🇳', c: '+86', n: 'China' }, { f: '🇯🇵', c: '+81', n: 'Japan' }, { f: '🇰🇷', c: '+82', n: 'South Korea' },
-  { f: '🇸🇬', c: '+65', n: 'Singapore' }, { f: '🇲🇾', c: '+60', n: 'Malaysia' }, { f: '🇵🇭', c: '+63', n: 'Philippines' },
-  { f: '🇹🇭', c: '+66', n: 'Thailand' }, { f: '🇮🇩', c: '+62', n: 'Indonesia' }, { f: '🇻🇳', c: '+84', n: 'Vietnam' },
-  { f: '🇳🇿', c: '+64', n: 'New Zealand' }, { f: '🇿🇦', c: '+27', n: 'South Africa' }, { f: '🇳🇬', c: '+234', n: 'Nigeria' },
-  { f: '🇰🇪', c: '+254', n: 'Kenya' }, { f: '🇬🇭', c: '+233', n: 'Ghana' }, { f: '🇪🇬', c: '+20', n: 'Egypt' },
-  { f: '🇲🇦', c: '+212', n: 'Morocco' }, { f: '🇧🇷', c: '+55', n: 'Brazil' }, { f: '🇲🇽', c: '+52', n: 'Mexico' },
-  { f: '🇦🇷', c: '+54', n: 'Argentina' }, { f: '🇨🇴', c: '+57', n: 'Colombia' }, { f: '🇨🇱', c: '+56', n: 'Chile' },
-  { f: '🇵🇪', c: '+51', n: 'Peru' }, { f: '🇯🇲', c: '+1', n: 'Jamaica' }, { f: '🇹🇹', c: '+1', n: 'Trinidad & Tobago' },
+const SUPABASE_URL = "https://eqmagffuzblywevszosw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_AU0KXJRdQlCTJfPDxojN_A_oOACqn_h";
+
+let currentStep = 1;
+const totalSteps = 7;
+let formData = {
+  experience: "",
+  goal: "",
+  age: "",
+  budget: "",
+  email: "",
+  name: "",
+  phone: "",
+  contact_preference: ""
+};
+
+function updateDots() {
+  for (let i = 1; i <= totalSteps; i++) {
+    const dotRow = document.getElementById(`d${i}`);
+    if (dotRow) {
+      dotRow.innerHTML = Array.from({ length: totalSteps }).map((_, idx) => {
+        let cls = "dot";
+        if (idx + 1 === i) cls += " active";
+        else if (idx + 1 < i) cls += " done";
+        return `<div class="${cls}"></div>`;
+      }).join('');
+    }
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateDots();
+  
+  const setupEnterKey = (id, step) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") next(step);
+      });
+    }
+  };
+
+  setupEnterKey("emailVal", 5);
+  setupEnterKey("firstName", 6);
+  setupEnterKey("lastName", 6);
+  setupEnterKey("phoneVal", 6);
+});
+
+function pick(qId, el) {
+  const container = document.getElementById(qId);
+  const choices = container.querySelectorAll('.choice');
+  choices.forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  
+  const step = parseInt(qId.replace('q', ''));
+  
+  const errEl = document.getElementById(`e${step}`);
+  if (errEl) errEl.innerText = "";
+  
+  setTimeout(() => {
+    if (step < totalSteps) {
+      next(step);
+    } else {
+      submitForm();
+    }
+  }, 350);
+}
+
+function next(step) {
+  const errEl = document.getElementById(`e${step}`);
+  if (errEl) errEl.innerText = "";
+  
+  if ([1, 2, 3, 4, 7].includes(step)) {
+    const selected = document.querySelector(`#q${step} .choice.selected`);
+    if (!selected) {
+      if (errEl) errEl.innerText = "Please select an option.";
+      return;
+    }
+    
+    const val = selected.getAttribute("data-v");
+    if (step === 1) formData.experience = val;
+    if (step === 2) formData.goal = val;
+    if (step === 3) formData.age = val;
+    if (step === 4) formData.budget = val;
+    if (step === 7) formData.contact_preference = val;
+  }
+  
+  if (step === 5) {
+    const email = document.getElementById("emailVal").value.trim();
+    if (!email || !email.includes("@")) {
+      if (errEl) errEl.innerText = "Please enter a valid email address.";
+      return;
+    }
+    formData.email = email;
+  }
+  
+  if (step === 6) {
+    const fn = document.getElementById("firstName").value.trim();
+    const ln = document.getElementById("lastName").value.trim();
+    const phone = document.getElementById("phoneVal").value.trim();
+    
+    if (!fn || !ln) {
+      if (errEl) errEl.innerText = "Please enter your full name.";
+      return;
+    }
+    
+    if (!phone) {
+      if (errEl) errEl.innerText = "Please enter your phone number.";
+      return;
+    }
+    
+    formData.name = `${fn} ${ln}`;
+    const code = document.getElementById("codeDisplay") ? document.getElementById("codeDisplay").innerText : "+1";
+    formData.phone = `${code} ${phone}`;
+  }
+  
+  document.getElementById(`q${step}`).classList.remove("active");
+  document.getElementById(`q${step + 1}`).classList.add("active");
+  currentStep = step + 1;
+}
+
+function back(step) {
+  if (step <= 1) return;
+  document.getElementById(`q${step}`).classList.remove("active");
+  document.getElementById(`q${step - 1}`).classList.add("active");
+  currentStep = step - 1;
+}
+
+async function submitForm() {
+  const step = 7;
+  const errEl = document.getElementById(`e${step}`);
+  if (errEl) errEl.innerText = "";
+  
+  const selected = document.querySelector(`#q${step} .choice.selected`);
+  if (!selected && !formData.contact_preference) {
+    if (errEl) errEl.innerText = "Please select an option.";
+    return;
+  }
+  
+  if (selected) {
+    formData.contact_preference = selected.getAttribute("data-v");
+  }
+
+  const btn = document.querySelector(`#q${step} .btn-ok`);
+  if (btn) {
+    btn.innerText = "Submitting...";
+    btn.disabled = true;
+  }
+
+  try {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/applications`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    document.getElementById(`q${step}`).classList.remove("active");
+    document.getElementById(`q-ok`).classList.add("active");
+    
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    if (errEl) errEl.innerText = "There was an error submitting your application. Please try again.";
+    if (btn) {
+      btn.innerText = "Submit →";
+      btn.disabled = false;
+    }
+  }
+}
+
+const countries = [
+  { code: "+1", flag: "🇺🇸", name: "United States / Canada" },
+  { code: "+44", flag: "🇬🇧", name: "United Kingdom" },
+  { code: "+61", flag: "🇦🇺", name: "Australia" },
+  { code: "+31", flag: "🇳🇱", name: "Netherlands" },
+  { code: "+49", flag: "🇩🇪", name: "Germany" },
+  { code: "+33", flag: "🇫🇷", name: "France" },
+  { code: "+34", flag: "🇪🇸", name: "Spain" },
+  { code: "+39", flag: "🇮🇹", name: "Italy" },
+  { code: "+41", flag: "🇨🇭", name: "Switzerland" },
+  { code: "+46", flag: "🇸🇪", name: "Sweden" },
+  { code: "+47", flag: "🇳🇴", name: "Norway" },
+  { code: "+45", flag: "🇩🇰", name: "Denmark" },
+  { code: "+353", flag: "🇮🇪", name: "Ireland" },
+  { code: "+64", flag: "🇳🇿", name: "New Zealand" }
 ];
 
-function buildCountrySelect() {
-  const sel = document.getElementById('countrySelect');
-  if (!sel) return;
-  COUNTRIES.forEach((co, i) => {
-    const opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = `${co.f} ${co.n} (${co.c})`;
-    if (i === 0) opt.selected = true;
-    sel.appendChild(opt);
-  });
-  sel.addEventListener('change', () => {
-    const co = COUNTRIES[+sel.value];
-    document.getElementById('flagDisplay').textContent = co.f;
-    document.getElementById('codeDisplay').textContent = co.c;
-  });
-}
-
-// ── FORM STATE ──
-const TOTAL = 6;
-let cur = 1;
-const ans = {};
-
-// ── SCROLL REVEAL ──
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-// ── RIPPLE ──
-document.addEventListener('click', e => {
-  const btn = e.target.closest('.ripple-btn');
-  if (!btn) return;
-  const r = document.createElement('span');
-  r.className = 'ripple';
-  const rect = btn.getBoundingClientRect();
-  const size = Math.max(rect.width, rect.height);
-  r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size / 2}px;top:${e.clientY - rect.top - size / 2}px`;
-  btn.appendChild(r);
-  setTimeout(() => r.remove(), 700);
+document.addEventListener("DOMContentLoaded", () => {
+  const select = document.getElementById("countrySelect");
+  if (select) {
+    select.innerHTML = countries.map(c => `<option value="${c.code}" data-flag="${c.flag}">${c.name} (${c.code})</option>`).join("");
+    
+    select.addEventListener("change", (e) => {
+      const option = e.target.options[e.target.selectedIndex];
+      document.getElementById("codeDisplay").innerText = option.value;
+      document.getElementById("flagDisplay").innerText = option.getAttribute("data-flag");
+    });
+  }
 });
 
-// ── DOTS ──
-function buildDots(active) {
-  for (let i = 1; i <= TOTAL; i++) {
-    const c = document.getElementById('d' + i);
-    if (!c) continue;
-    c.innerHTML = '';
-    for (let d = 1; d <= TOTAL; d++) {
-      const el = document.createElement('div');
-      el.className = 'dot' + (d === active ? ' active' : d < active ? ' done' : '');
-      c.appendChild(el);
-    }
-  }
-  const sc = document.getElementById('d-ok');
-  if (sc) {
-    sc.innerHTML = '';
-    for (let d = 0; d < TOTAL; d++) {
-      const el = document.createElement('div');
-      el.className = 'dot done';
-      sc.appendChild(el);
-    }
-  }
-}
-
-// ── SHOW QUESTION ──
-function showQ(n) {
-  document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
-  const el = document.getElementById('q' + n) || document.getElementById('q-ok');
-  if (el) el.classList.add('active');
-  cur = n;
-  buildDots(n);
-  setTimeout(() => {
-    document.getElementById('theForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 50);
-}
-
-// ── PICK ──
-function pick(qId, el) {
-  const num = qId.replace('q', '');
-  document.querySelectorAll('#c' + num + ' .choice').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  ans[qId] = el.dataset.v;
-  document.getElementById('e' + num).textContent = '';
-  const okBtn = document.querySelector('#q' + num + ' .btn-ok');
-  if (okBtn) okBtn.classList.add('ready');
-  setTimeout(() => next(parseInt(num)), 320);
-}
-
-// ── VALIDATE ──
-function validate(n) {
-  if (n <= 4 && !ans['q' + n]) {
-    document.getElementById('e' + n).textContent = 'Please select an option.';
-    shake('q' + n); return false;
-  }
-  if (n === 5) {
-    const v = document.getElementById('emailVal').value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
-      document.getElementById('e5').textContent = 'Please enter a valid email address.';
-      shake('q5'); return false;
-    }
-    ans.email = v;
-  }
-  if (n === 6) {
-    const fn = document.getElementById('firstName').value.trim();
-    const ph = document.getElementById('phoneVal').value.trim();
-    if (!fn) { document.getElementById('e6').textContent = 'Please enter your first name.'; shake('q6'); return false; }
-    if (!ph) { document.getElementById('e6').textContent = 'Please enter your phone number.'; shake('q6'); return false; }
-    ans.name = fn + ' ' + document.getElementById('lastName').value.trim();
-    const code = document.getElementById('codeDisplay').textContent;
-    ans.phone = code + ' ' + ph;
-  }
-  return true;
-}
-
-function shake(qId) {
-  const el = document.getElementById(qId);
-  if (!el) return;
-  el.style.animation = 'none';
-  void el.offsetHeight;
-  el.style.animation = 'shake 0.4s ease';
-}
-
-// ── NEXT / BACK ──
-function next(n) {
-  if (!validate(n)) return;
-  if (n < TOTAL) {
-    showQ(n + 1);
-    if (n + 1 === 5) setTimeout(() => document.getElementById('emailVal').focus(), 200);
-    if (n + 1 === 6) setTimeout(() => document.getElementById('firstName').focus(), 200);
-  } else {
-    submitForm();
-  }
-}
-function back(n) { if (n > 1) showQ(n - 1); }
-
-// ── SUBMIT → FORMSPREE ──
-function submitForm() {
-  document.getElementById('f-experience').value = ans.q1 || '';
-  document.getElementById('f-goal').value = ans.q2 || '';
-  document.getElementById('f-age').value = ans.q3 || '';
-  document.getElementById('f-budget').value = ans.q4 || '';
-  document.getElementById('f-email').value = ans.email || '';
-  document.getElementById('f-name').value = ans.name || '';
-  document.getElementById('f-phone').value = ans.phone || '';
-
-  fetch('https://formspree.io/f/mdalegvn', {
-    method: 'POST',
-    body: new FormData(document.getElementById('fs-form')),
-    headers: { 'Accept': 'application/json' }
-  }).catch(() => { }); // silent fail — user already sees success
-
-  document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
-  document.getElementById('q-ok').classList.add('active');
-  buildDots(99);
-  setTimeout(() => {
-    document.getElementById('theForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 100);
-  launchConfetti();
-}
-
-// ── CONFETTI ──
-function launchConfetti() {
-  const colors = ['#39FF14', '#ffffff', '#a0ff60', '#00ff88'];
-  for (let i = 0; i < 70; i++) {
-    const el = document.createElement('div');
-    const size = Math.random() * 8 + 4;
-    el.style.cssText = [
-      `position:fixed`,
-      `width:${size}px`,
-      `height:${size}px`,
-      `background:${colors[Math.floor(Math.random() * colors.length)]}`,
-      `border-radius:${Math.random() > 0.5 ? '50%' : '2px'}`,
-      `left:${Math.random() * 100}vw`,
-      `top:-10px`,
-      `z-index:9999`,
-      `pointer-events:none`,
-      `opacity:${(Math.random() * 0.8 + 0.2).toFixed(2)}`,
-      `animation:confettiFall ${(Math.random() * 1.5 + 1).toFixed(2)}s ${(Math.random() * 0.8).toFixed(2)}s ease-in forwards`,
-    ].join(';');
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 3500);
-  }
-}
-
-// ── FAQ ──
 function toggleFaq(el) {
-  const isOpen = el.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
-  if (!isOpen) el.classList.add('open');
+  el.classList.toggle("open");
+  const answer = el.querySelector('.faq-a');
+  const icon = el.querySelector('.faq-icon');
+  
+  if (el.classList.contains("open")) {
+    icon.innerText = "−";
+    if(answer) answer.style.display = "block";
+  } else {
+    icon.innerText = "+";
+    if(answer) answer.style.display = "none";
+  }
 }
-
-// ── KEYBOARD SHORTCUTS ──
-document.addEventListener('keydown', e => {
-  const tag = document.activeElement.tagName;
-
-  // If we are on the Name/Phone step (step 6), handle Enter navigation between fields
-  if (cur === 6 && e.key === 'Enter') {
-    e.preventDefault();
-    const active = document.activeElement;
-    if (active.id === 'firstName') {
-      document.getElementById('lastName').focus();
-    } else if (active.id === 'lastName') {
-      document.getElementById('phoneVal').focus();
-    } else {
-      // If on phone or button, try to validate and proceed
-      next(cur);
-    }
-    return;
-  }
-
-  if (tag === 'INPUT' || tag === 'SELECT') {
-    if (e.key === 'Enter') { e.preventDefault(); next(cur); }
-    return;
-  }
-  if (e.key === 'Enter' && cur <= TOTAL) { next(cur); return; }
-  if (cur >= 1 && cur <= 4) {
-    const map = { a: 0, b: 1, c: 2, d: 3, e: 4 };
-    const idx = map[e.key.toLowerCase()];
-    if (idx !== undefined) {
-      const items = document.querySelectorAll('#c' + cur + ' .choice');
-      if (items[idx]) items[idx].click();
-    }
-  }
-});
-
-
-// ── INIT ──
-buildDots(1);
-buildCountrySelect();

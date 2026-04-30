@@ -89,17 +89,6 @@
     <source src="photos/back.mp4" type="video/mp4">
   </video>
 
-  <!-- Hidden Formspree form -->
-  <form id="fs-form" action="https://formspree.io/f/mdalegvn" method="POST" style="display:none;">
-    <input type="hidden" name="experience" id="f-experience">
-    <input type="hidden" name="goal" id="f-goal">
-    <input type="hidden" name="age" id="f-age">
-    <input type="hidden" name="budget" id="f-budget">
-    <input type="email" name="email" id="f-email">
-    <input type="hidden" name="name" id="f-name">
-    <input type="hidden" name="phone" id="f-phone">
-  </form>
-
   <!-- HERO -->
   <section class="hero">
     <div class="hero-badge">
@@ -334,6 +323,32 @@
           </div>
         </div>
         <div class="dot-row" id="d6"></div>
+      </div>
+
+      <!-- Q7: Contact Preference -->
+      <div class="question" id="q7">
+        <div class="q-inner">
+          <div class="q-badge">7</div>
+          <div class="q-title"><span class="q-arrow">→</span>How would you prefer us to contact you?</div>
+          <div class="choices" id="c7">
+            <div class="choice" data-v="email" onclick="pick('q7',this)"><span class="ck-key">A</span>Email</div>
+            <div class="choice" data-v="sms" onclick="pick('q7',this)"><span class="ck-key">B</span>SMS / Text Message</div>
+            <div class="choice" data-v="whatsapp" onclick="pick('q7',this)"><span class="ck-key">C</span>WhatsApp</div>
+          </div>
+        </div>
+        <div class="q-error" id="e7"></div>
+        <div class="q-footer">
+          <button class="btn-back" onclick="back(7)" aria-label="Go back">
+            <svg viewBox="0 0 16 16" fill="none">
+              <path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>Back
+          </button>
+          <div class="enter-ok">
+            <span class="enter-hint">Press <kbd>Enter</kbd> to submit</span>
+            <button class="btn-ok ripple-btn" onclick="submitForm()">Submit →</button>
+          </div>
+        </div>
+        <div class="dot-row" id="d7"></div>
       </div>
 
       <!-- SUCCESS -->
