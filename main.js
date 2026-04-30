@@ -65,28 +65,36 @@ function pick(qId, el) {
     if (step < totalSteps) {
       next(step);
     } else {
+      // last step — collect value then submit
+      const val = el.getAttribute('data-v');
+      formData.contact_preference = val;
       submitForm();
     }
   }, 350);
+}
+
+function showStep(n) {
+  document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+  const el = document.getElementById(`q${n}`);
+  if (el) el.classList.add('active');
+  currentStep = n;
 }
 
 function next(step) {
   const errEl = document.getElementById(`e${step}`);
   if (errEl) errEl.innerText = "";
   
-  if ([1, 2, 3, 4, 7].includes(step)) {
+  if ([1, 2, 3, 4].includes(step)) {
     const selected = document.querySelector(`#q${step} .choice.selected`);
     if (!selected) {
       if (errEl) errEl.innerText = "Please select an option.";
       return;
     }
-    
     const val = selected.getAttribute("data-v");
     if (step === 1) formData.experience = val;
     if (step === 2) formData.goal = val;
     if (step === 3) formData.age = val;
     if (step === 4) formData.budget = val;
-    if (step === 7) formData.contact_preference = val;
   }
   
   if (step === 5) {
@@ -102,32 +110,26 @@ function next(step) {
     const fn = document.getElementById("firstName").value.trim();
     const ln = document.getElementById("lastName").value.trim();
     const phone = document.getElementById("phoneVal").value.trim();
-    
     if (!fn || !ln) {
       if (errEl) errEl.innerText = "Please enter your full name.";
       return;
     }
-    
     if (!phone) {
       if (errEl) errEl.innerText = "Please enter your phone number.";
       return;
     }
-    
     formData.name = `${fn} ${ln}`;
-    const code = document.getElementById("codeDisplay") ? document.getElementById("codeDisplay").innerText : "+1";
+    const codeEl = document.getElementById("codeDisplay");
+    const code = codeEl ? (codeEl.textContent || "+1") : "+1";
     formData.phone = `${code} ${phone}`;
   }
   
-  document.getElementById(`q${step}`).classList.remove("active");
-  document.getElementById(`q${step + 1}`).classList.add("active");
-  currentStep = step + 1;
+  showStep(step + 1);
 }
 
 function back(step) {
   if (step <= 1) return;
-  document.getElementById(`q${step}`).classList.remove("active");
-  document.getElementById(`q${step - 1}`).classList.add("active");
-  currentStep = step - 1;
+  showStep(step - 1);
 }
 
 async function submitForm() {
