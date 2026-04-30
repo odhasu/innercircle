@@ -216,12 +216,31 @@ function toggleFaq(el) {
   el.classList.toggle("open");
   const answer = el.querySelector('.faq-a');
   const icon = el.querySelector('.faq-icon');
-  
-  if (el.classList.contains("open")) {
-    icon.innerText = "−";
-    if(answer) answer.style.display = "block";
-  } else {
-    icon.innerText = "+";
-    if(answer) answer.style.display = "none";
-  }
+  if (icon) icon.innerText = el.classList.contains("open") ? "−" : "+";
+  if (answer) answer.style.display = el.classList.contains("open") ? "block" : "none";
 }
+
+// ---- Scroll Reveal ----
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ---- Ripple Effect ----
+document.querySelectorAll('.ripple-btn').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    const rect = this.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    const size = Math.max(this.offsetWidth, this.offsetHeight);
+    ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size/2}px;top:${e.clientY - rect.top - size/2}px;`;
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  });
+});
