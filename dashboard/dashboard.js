@@ -71,22 +71,47 @@ function formatDate(iso) {
   return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) + " · " + d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
 }
 
+window.toggleContacted = function(id, cb) {
+  localStorage.setItem('contacted_' + id, cb.checked ? 'true' : 'false');
+  cb.closest('tr').style.opacity = cb.checked ? '0.4' : '1';
+};
+
 function renderTable(rows) {
   const body = document.getElementById("table-body");
-  body.innerHTML = rows.map(r => `
-    <tr>
-      <td class="id-cell">#${r.id}</td>
-      <td class="name-cell">${r.name || "—"}</td>
-      <td class="email-cell">${r.email || "—"}</td>
-      <td>${r.phone || "—"}</td>
-      <td><span class="badge badge-muted">${EXPERIENCE_LABELS[r.experience] || r.experience || "—"}</span></td>
-      <td><span class="badge badge-purple">${GOAL_LABELS[r.goal] || r.goal || "—"}</span></td>
-      <td><span class="badge badge-muted">${BUDGET_LABELS[r.budget] || r.budget || "—"}</span></td>
-      <td>${r.age || "—"}</td>
-      <td><span class="badge ${CONTACT_BADGE[r.contact_preference] || 'badge-muted'}">${CONTACT_LABEL[r.contact_preference] || r.contact_preference || "—"}</span></td>
-      <td style="color:var(--muted);font-size:12px;white-space:nowrap;">${formatDate(r.created_at)}</td>
-    </tr>
-  `).join("");
+  body.innerHTML = rows.map(r => {
+    const isContacted = localStorage.getItem('contacted_' + r.id) === 'true';
+    const cleanPhone = r.phone ? r.phone.replace(/[^0-9+]/g, '') : '';
+    const justDigits = cleanPhone.replace('+', '');
+    
+    let phoneDisplay = r.phone || "—";
+    if (r.phone) {
+      if (r.contact_preference === 'whatsapp') {
+        phoneDisplay = `<a href="https://wa.me/${justDigits}" target="_blank" style="color:var(--green);text-decoration:none;">${r.phone} ↗</a>`;
+      } else if (r.contact_preference === 'sms') {
+        phoneDisplay = `<a href="sms:${cleanPhone}" style="color:var(--text);text-decoration:underline;">${r.phone} ↗</a>`;
+      } else {
+        phoneDisplay = `<a href="tel:${cleanPhone}" style="color:var(--text);text-decoration:none;">${r.phone}</a>`;
+      }
+    }
+
+    return `
+      <tr style="transition: opacity 0.2s; opacity: ${isContacted ? '0.4' : '1'};">
+        <td style="text-align:center;">
+          <input type="checkbox" id="cb_${r.id}" onchange="toggleContacted(${r.id}, this)" ${isContacted ? 'checked' : ''} style="cursor:pointer; width:16px; height:16px; accent-color: var(--green);">
+        </td>
+        <td class="id-cell">#${r.id}</td>
+        <td class="name-cell">${r.name || "—"}</td>
+        <td class="email-cell">${r.email || "—"}</td>
+        <td>${phoneDisplay}</td>
+        <td><span class="badge badge-muted">${EXPERIENCE_LABELS[r.experience] || r.experience || "—"}</span></td>
+        <td><span class="badge badge-purple">${GOAL_LABELS[r.goal] || r.goal || "—"}</span></td>
+        <td><span class="badge badge-muted">${BUDGET_LABELS[r.budget] || r.budget || "—"}</span></td>
+        <td>${r.age || "—"}</td>
+        <td><span class="badge ${CONTACT_BADGE[r.contact_preference] || 'badge-muted'}">${CONTACT_LABEL[r.contact_preference] || r.contact_preference || "—"}</span></td>
+        <td style="color:var(--muted);font-size:12px;white-space:nowrap;">${formatDate(r.created_at)}</td>
+      </tr>
+    `;
+  }).join("");
 }
 
 function addRipple(e) {
