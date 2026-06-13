@@ -80,17 +80,18 @@ function renderTable(rows) {
   const body = document.getElementById("table-body");
   body.innerHTML = rows.map(r => {
     const isContacted = localStorage.getItem('contacted_' + r.id) === 'true';
-    const cleanPhone = r.phone ? r.phone.replace(/[^0-9+]/g, '') : '';
-    const justDigits = cleanPhone.replace('+', '');
+    const phoneStr = r.phone ? String(r.phone) : '';
+    const cleanPhone = phoneStr.replace(/[^0-9+]/g, '');
+    const justDigits = cleanPhone.replace(/\+/g, '');
     
-    let phoneDisplay = r.phone || "—";
-    if (r.phone) {
+    let phoneDisplay = phoneStr || "—";
+    if (phoneStr) {
       if (r.contact_preference === 'whatsapp') {
-        phoneDisplay = `<a href="https://wa.me/${justDigits}" target="_blank" style="color:var(--green);text-decoration:none;">${r.phone} ↗</a>`;
+        phoneDisplay = `<a href="https://wa.me/${justDigits}" target="_blank" style="color:var(--green);text-decoration:none;">${phoneStr} ↗</a>`;
       } else if (r.contact_preference === 'sms') {
-        phoneDisplay = `<a href="sms:${cleanPhone}" style="color:var(--text);text-decoration:underline;">${r.phone} ↗</a>`;
+        phoneDisplay = `<a href="sms:${cleanPhone}" style="color:var(--text);text-decoration:underline;">${phoneStr} ↗</a>`;
       } else {
-        phoneDisplay = `<a href="tel:${cleanPhone}" style="color:var(--text);text-decoration:none;">${r.phone}</a>`;
+        phoneDisplay = `<a href="tel:${cleanPhone}" style="color:var(--text);text-decoration:none;">${phoneStr}</a>`;
       }
     }
 
