@@ -1,5 +1,3 @@
-const SUPABASE_URL = "https://eqmagffuzblywevszosw.supabase.co";
-const SUPABASE_KEY = "sb_publishable_AU0KXJRdQlCTJfPDxojN_A_oOACqn_h";
 const SESSION_KEY  = "og_dash_session";
 
 function isLoggedIn() { return sessionStorage.getItem(SESSION_KEY) === "authenticated"; }
@@ -19,15 +17,16 @@ async function loadApplications() {
   icon.style.animation = "spin 0.7s linear infinite";
 
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/applications?select=*&order=created_at.desc`, {
-      headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}`, "Content-Type": "application/json" }
+    const res = await fetch("https://ogresell-funnel.vercel.app/api/applications", {
+      headers: { "Content-Type": "application/json" }
     });
     if (!res.ok) throw new Error("Failed to fetch");
-    const rows = await res.json();
+    const data = await res.json();
+    const rows = data.rows || [];
     
     loader.style.display = "none"; icon.style.animation = "";
     
-    if (!rows || rows.length === 0) { empty.style.display = "flex"; updateStats([]); return; }
+    if (rows.length === 0) { empty.style.display = "flex"; updateStats([]); return; }
     
     updateStats(rows); renderTable(rows); table.style.display = "table";
   } catch (err) {
@@ -98,7 +97,7 @@ function renderTable(rows) {
     return `
       <tr style="transition: opacity 0.2s; opacity: ${isContacted ? '0.4' : '1'};">
         <td style="text-align:center;">
-          <input type="checkbox" id="cb_${r.id}" onchange="toggleContacted(${r.id}, this)" ${isContacted ? 'checked' : ''} style="cursor:pointer; width:16px; height:16px; accent-color: var(--green);">
+          <input type="checkbox" id="cb_${r.id}" onchange="toggleContacted('${r.id}', this)" ${isContacted ? 'checked' : ''} style="cursor:pointer; width:16px; height:16px; accent-color: var(--green);">
         </td>
         <td class="id-cell">#${r.id}</td>
         <td class="name-cell">${r.name || "—"}</td>

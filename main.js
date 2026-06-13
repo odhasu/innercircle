@@ -2,8 +2,7 @@
    OGs Inner Circle – App Logic
 ================================ */
 
-const SUPABASE_URL = "https://eqmagffuzblywevszosw.supabase.co";
-const SUPABASE_KEY = "sb_publishable_AU0KXJRdQlCTJfPDxojN_A_oOACqn_h";
+
 
 // ── COUNTRIES ──
 const COUNTRIES = [
@@ -189,14 +188,11 @@ async function submitForm() {
   }, 100);
   launchConfetti();
 
-  // Fire & forget to Supabase
-  fetch(`${SUPABASE_URL}/rest/v1/applications`, {
+  // Fire & forget to backend
+  fetch('https://ogresell-funnel.vercel.app/api/applications', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'apikey': SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
-      'Prefer': 'return=minimal'
     },
     body: JSON.stringify(payload)
   }).catch(() => {});
